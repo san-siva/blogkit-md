@@ -1,0 +1,2351 @@
+{
+  "type": "root",
+  "children": [
+    {
+      "type": "heading",
+      "depth": 1,
+      "children": [
+        {
+          "type": "text",
+          "value": "The Ultimate Guide to Managing Multiple Git Accounts & SSH Keys",
+          "position": {
+            "start": {
+              "line": 1,
+              "column": 3,
+              "offset": 2
+            },
+            "end": {
+              "line": 1,
+              "column": 66,
+              "offset": 65
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 1,
+          "column": 1,
+          "offset": 0
+        },
+        "end": {
+          "line": 1,
+          "column": 66,
+          "offset": 65
+        }
+      }
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "Managing multiple GitHub accounts for work, side projects,",
+          "position": {
+            "start": {
+              "line": 3,
+              "column": 1,
+              "offset": 67
+            },
+            "end": {
+              "line": 3,
+              "column": 59,
+              "offset": 125
+            }
+          }
+        },
+        {
+          "type": "break",
+          "position": {
+            "start": {
+              "line": 3,
+              "column": 59,
+              "offset": 125
+            },
+            "end": {
+              "line": 4,
+              "column": 1,
+              "offset": 128
+            }
+          }
+        },
+        {
+          "type": "text",
+          "value": "and open-source contributions doesn't have to be a nightmare. Here is a straightforward guide to keeping your personal and professional Git environments perfectly separated.",
+          "position": {
+            "start": {
+              "line": 4,
+              "column": 1,
+              "offset": 128
+            },
+            "end": {
+              "line": 4,
+              "column": 174,
+              "offset": 301
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 3,
+          "column": 1,
+          "offset": 67
+        },
+        "end": {
+          "line": 4,
+          "column": 174,
+          "offset": 301
+        }
+      }
+    },
+    {
+      "type": "heading",
+      "depth": 2,
+      "children": [
+        {
+          "type": "text",
+          "value": "The Problem",
+          "position": {
+            "start": {
+              "line": 6,
+              "column": 4,
+              "offset": 306
+            },
+            "end": {
+              "line": 6,
+              "column": 15,
+              "offset": 317
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 6,
+          "column": 1,
+          "offset": 303
+        },
+        "end": {
+          "line": 6,
+          "column": 15,
+          "offset": 317
+        }
+      }
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "By default, Git uses a single global identity — one name, one email, and one SSH key. When you have multiple GitHub accounts (e.g. a personal account and a work account), every repo on your machine will commit under the same identity, and SSH will always try the same key regardless of which account you need.",
+          "position": {
+            "start": {
+              "line": 8,
+              "column": 1,
+              "offset": 319
+            },
+            "end": {
+              "line": 8,
+              "column": 310,
+              "offset": 628
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 8,
+          "column": 1,
+          "offset": 319
+        },
+        "end": {
+          "line": 8,
+          "column": 310,
+          "offset": 628
+        }
+      }
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "You wouldn't want to accidentally commit to an open-source repository with your work email, or vice versa.",
+          "position": {
+            "start": {
+              "line": 10,
+              "column": 1,
+              "offset": 630
+            },
+            "end": {
+              "line": 10,
+              "column": 107,
+              "offset": 736
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 10,
+          "column": 1,
+          "offset": 630
+        },
+        "end": {
+          "line": 10,
+          "column": 107,
+          "offset": 736
+        }
+      }
+    },
+    {
+      "type": "heading",
+      "depth": 2,
+      "children": [
+        {
+          "type": "text",
+          "value": "Managing multiple GitHub accounts",
+          "position": {
+            "start": {
+              "line": 12,
+              "column": 4,
+              "offset": 741
+            },
+            "end": {
+              "line": 12,
+              "column": 37,
+              "offset": 774
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 12,
+          "column": 1,
+          "offset": 738
+        },
+        "end": {
+          "line": 12,
+          "column": 37,
+          "offset": 774
+        }
+      }
+    },
+    {
+      "type": "heading",
+      "depth": 3,
+      "children": [
+        {
+          "type": "text",
+          "value": "Organize your workspaces",
+          "position": {
+            "start": {
+              "line": 14,
+              "column": 5,
+              "offset": 780
+            },
+            "end": {
+              "line": 14,
+              "column": 29,
+              "offset": 804
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 14,
+          "column": 1,
+          "offset": 776
+        },
+        "end": {
+          "line": 14,
+          "column": 29,
+          "offset": 804
+        }
+      }
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "Organize your workspaces in a way that makes sense to you. This way you will always know which git config you need to use for which repo, based on your working path.",
+          "position": {
+            "start": {
+              "line": 16,
+              "column": 1,
+              "offset": 806
+            },
+            "end": {
+              "line": 16,
+              "column": 166,
+              "offset": 971
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 16,
+          "column": 1,
+          "offset": 806
+        },
+        "end": {
+          "line": 16,
+          "column": 166,
+          "offset": 971
+        }
+      }
+    },
+    {
+      "type": "code",
+      "lang": "bash",
+      "meta": null,
+      "value": "# Organize your workspaces\n.\n├── opensource # Open-source projects should use san-siva@gmail.com\n├── sidegig    # Side Projects, should use san-siva@sidegig.com\n└── work       # Personal projects, should use san-siva@work.com",
+      "position": {
+        "start": {
+          "line": 18,
+          "column": 1,
+          "offset": 973
+        },
+        "end": {
+          "line": 24,
+          "column": 4,
+          "offset": 1210
+        }
+      }
+    },
+    {
+      "type": "heading",
+      "depth": 3,
+      "children": [
+        {
+          "type": "text",
+          "value": "Setup your global git config",
+          "position": {
+            "start": {
+              "line": 26,
+              "column": 5,
+              "offset": 1216
+            },
+            "end": {
+              "line": 26,
+              "column": 33,
+              "offset": 1244
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 26,
+          "column": 1,
+          "offset": 1212
+        },
+        "end": {
+          "line": 26,
+          "column": 33,
+          "offset": 1244
+        }
+      }
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "Start by configuring your global ",
+          "position": {
+            "start": {
+              "line": 28,
+              "column": 1,
+              "offset": 1246
+            },
+            "end": {
+              "line": 28,
+              "column": 34,
+              "offset": 1279
+            }
+          }
+        },
+        {
+          "type": "inlineCode",
+          "value": "~/.gitconfig",
+          "position": {
+            "start": {
+              "line": 28,
+              "column": 34,
+              "offset": 1279
+            },
+            "end": {
+              "line": 28,
+              "column": 48,
+              "offset": 1293
+            }
+          }
+        },
+        {
+          "type": "text",
+          "value": " file. It should contain your primary name and email address, acting as the default fallback identity for any repository outside your specialized workspaces.",
+          "position": {
+            "start": {
+              "line": 28,
+              "column": 48,
+              "offset": 1293
+            },
+            "end": {
+              "line": 28,
+              "column": 205,
+              "offset": 1450
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 28,
+          "column": 1,
+          "offset": 1246
+        },
+        "end": {
+          "line": 28,
+          "column": 205,
+          "offset": 1450
+        }
+      }
+    },
+    {
+      "type": "code",
+      "lang": "bash",
+      "meta": null,
+      "value": "# ~/.gitconfig\n[user]\n\temail = san-siva@gmail.com\n\tname = Santhosh Siva\n[pull]\n\trebase = false # set this to true if you want to rebase instead of merge\n[submodule]\n\trecurse = true # optional, if you are dealing with monorepos",
+      "position": {
+        "start": {
+          "line": 30,
+          "column": 1,
+          "offset": 1452
+        },
+        "end": {
+          "line": 39,
+          "column": 4,
+          "offset": 1690
+        }
+      }
+    },
+    {
+      "type": "heading",
+      "depth": 3,
+      "children": [
+        {
+          "type": "text",
+          "value": "Set up workspace-specific Git configs",
+          "position": {
+            "start": {
+              "line": 41,
+              "column": 5,
+              "offset": 1696
+            },
+            "end": {
+              "line": 41,
+              "column": 42,
+              "offset": 1733
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 41,
+          "column": 1,
+          "offset": 1692
+        },
+        "end": {
+          "line": 41,
+          "column": 42,
+          "offset": 1733
+        }
+      }
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "Next, create a dedicated Git configuration file for each workspace. This file will dictate the specific identity you want to use for that particular directory.",
+          "position": {
+            "start": {
+              "line": 43,
+              "column": 1,
+              "offset": 1735
+            },
+            "end": {
+              "line": 43,
+              "column": 160,
+              "offset": 1894
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 43,
+          "column": 1,
+          "offset": 1735
+        },
+        "end": {
+          "line": 43,
+          "column": 160,
+          "offset": 1894
+        }
+      }
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "For example, I created ",
+          "position": {
+            "start": {
+              "line": 45,
+              "column": 1,
+              "offset": 1896
+            },
+            "end": {
+              "line": 45,
+              "column": 24,
+              "offset": 1919
+            }
+          }
+        },
+        {
+          "type": "inlineCode",
+          "value": "~/.gitconfig__work",
+          "position": {
+            "start": {
+              "line": 45,
+              "column": 24,
+              "offset": 1919
+            },
+            "end": {
+              "line": 45,
+              "column": 44,
+              "offset": 1939
+            }
+          }
+        },
+        {
+          "type": "text",
+          "value": " for my work-related projects, and ",
+          "position": {
+            "start": {
+              "line": 45,
+              "column": 44,
+              "offset": 1939
+            },
+            "end": {
+              "line": 45,
+              "column": 79,
+              "offset": 1974
+            }
+          }
+        },
+        {
+          "type": "inlineCode",
+          "value": "~/.gitconfig__sidegig",
+          "position": {
+            "start": {
+              "line": 45,
+              "column": 79,
+              "offset": 1974
+            },
+            "end": {
+              "line": 45,
+              "column": 102,
+              "offset": 1997
+            }
+          }
+        },
+        {
+          "type": "text",
+          "value": " for my side projects.",
+          "position": {
+            "start": {
+              "line": 45,
+              "column": 102,
+              "offset": 1997
+            },
+            "end": {
+              "line": 45,
+              "column": 124,
+              "offset": 2019
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 45,
+          "column": 1,
+          "offset": 1896
+        },
+        "end": {
+          "line": 45,
+          "column": 124,
+          "offset": 2019
+        }
+      }
+    },
+    {
+      "type": "code",
+      "lang": "bash",
+      "meta": null,
+      "value": "# ~/.gitconfig__work\n[user]\n\temail = san-siva@work.com\n\tname = Santhosh Siva\n[pull]\n\trebase = false\n[submodule]\n\trecurse = true",
+      "position": {
+        "start": {
+          "line": 47,
+          "column": 1,
+          "offset": 2021
+        },
+        "end": {
+          "line": 56,
+          "column": 4,
+          "offset": 2160
+        }
+      }
+    },
+    {
+      "type": "code",
+      "lang": "bash",
+      "meta": null,
+      "value": "# ~/.gitconfig__sidegig\n[user]\n\temail = san-siva@sidegig.com\n\tname = Santhosh Siva\n[pull]\n\trebase = false\n[submodule]\n\trecurse = true",
+      "position": {
+        "start": {
+          "line": 58,
+          "column": 1,
+          "offset": 2162
+        },
+        "end": {
+          "line": 67,
+          "column": 4,
+          "offset": 2307
+        }
+      }
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "Since my global ",
+          "position": {
+            "start": {
+              "line": 69,
+              "column": 1,
+              "offset": 2309
+            },
+            "end": {
+              "line": 69,
+              "column": 17,
+              "offset": 2325
+            }
+          }
+        },
+        {
+          "type": "inlineCode",
+          "value": "~/.gitconfig",
+          "position": {
+            "start": {
+              "line": 69,
+              "column": 17,
+              "offset": 2325
+            },
+            "end": {
+              "line": 69,
+              "column": 31,
+              "offset": 2339
+            }
+          }
+        },
+        {
+          "type": "text",
+          "value": " file already acts as the default identity for the rest of my system, and I use my personal email for open-source commits, I don't need to create a separate config for those.",
+          "position": {
+            "start": {
+              "line": 69,
+              "column": 31,
+              "offset": 2339
+            },
+            "end": {
+              "line": 69,
+              "column": 205,
+              "offset": 2513
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 69,
+          "column": 1,
+          "offset": 2309
+        },
+        "end": {
+          "line": 69,
+          "column": 205,
+          "offset": 2513
+        }
+      }
+    },
+    {
+      "type": "heading",
+      "depth": 3,
+      "children": [
+        {
+          "type": "text",
+          "value": "Link them back to the global config",
+          "position": {
+            "start": {
+              "line": 71,
+              "column": 5,
+              "offset": 2519
+            },
+            "end": {
+              "line": 71,
+              "column": 40,
+              "offset": 2554
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 71,
+          "column": 1,
+          "offset": 2515
+        },
+        "end": {
+          "line": 71,
+          "column": 40,
+          "offset": 2554
+        }
+      }
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "Now you need to let Git know which config file to use for which directory. This is done using the ",
+          "position": {
+            "start": {
+              "line": 73,
+              "column": 1,
+              "offset": 2556
+            },
+            "end": {
+              "line": 73,
+              "column": 99,
+              "offset": 2654
+            }
+          }
+        },
+        {
+          "type": "inlineCode",
+          "value": "includeIf",
+          "position": {
+            "start": {
+              "line": 73,
+              "column": 99,
+              "offset": 2654
+            },
+            "end": {
+              "line": 73,
+              "column": 110,
+              "offset": 2665
+            }
+          }
+        },
+        {
+          "type": "text",
+          "value": " directive in ",
+          "position": {
+            "start": {
+              "line": 73,
+              "column": 110,
+              "offset": 2665
+            },
+            "end": {
+              "line": 73,
+              "column": 124,
+              "offset": 2679
+            }
+          }
+        },
+        {
+          "type": "inlineCode",
+          "value": "~/.gitconfig",
+          "position": {
+            "start": {
+              "line": 73,
+              "column": 124,
+              "offset": 2679
+            },
+            "end": {
+              "line": 73,
+              "column": 138,
+              "offset": 2693
+            }
+          }
+        },
+        {
+          "type": "text",
+          "value": ".",
+          "position": {
+            "start": {
+              "line": 73,
+              "column": 138,
+              "offset": 2693
+            },
+            "end": {
+              "line": 73,
+              "column": 139,
+              "offset": 2694
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 73,
+          "column": 1,
+          "offset": 2556
+        },
+        "end": {
+          "line": 73,
+          "column": 139,
+          "offset": 2694
+        }
+      }
+    },
+    {
+      "type": "code",
+      "lang": "bash",
+      "meta": null,
+      "value": "# ~/.gitconfig\n[user]\n\temail = san-siva@gmail.com\n\tname = Santhosh Siva\n[pull]\n\trebase = false # set this to true if you want to rebase instead of merge\n[submodule]\n\trecurse = true # optional, if you are dealing with monorepos\n\n# Add these lines to your global config\n[includeIf \"gitdir:/Users/san.siva/work/\"]\n  path = ~/.gitconfig__work\n[includeIf \"gitdir:/Users/san.siva/sidegig/\"]\n  path = ~/.gitconfig__sidegig",
+      "position": {
+        "start": {
+          "line": 75,
+          "column": 1,
+          "offset": 2696
+        },
+        "end": {
+          "line": 90,
+          "column": 4,
+          "offset": 3123
+        }
+      }
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "For example, if I edit ",
+          "position": {
+            "start": {
+              "line": 92,
+              "column": 1,
+              "offset": 3125
+            },
+            "end": {
+              "line": 92,
+              "column": 24,
+              "offset": 3148
+            }
+          }
+        },
+        {
+          "type": "inlineCode",
+          "value": "~/work/react/app/package.json",
+          "position": {
+            "start": {
+              "line": 92,
+              "column": 24,
+              "offset": 3148
+            },
+            "end": {
+              "line": 92,
+              "column": 55,
+              "offset": 3179
+            }
+          }
+        },
+        {
+          "type": "text",
+          "value": ", Git will author my commits using ",
+          "position": {
+            "start": {
+              "line": 92,
+              "column": 55,
+              "offset": 3179
+            },
+            "end": {
+              "line": 92,
+              "column": 90,
+              "offset": 3214
+            }
+          }
+        },
+        {
+          "type": "inlineCode",
+          "value": "san-siva@work.com",
+          "position": {
+            "start": {
+              "line": 92,
+              "column": 90,
+              "offset": 3214
+            },
+            "end": {
+              "line": 92,
+              "column": 109,
+              "offset": 3233
+            }
+          }
+        },
+        {
+          "type": "text",
+          "value": ". This happens because the ",
+          "position": {
+            "start": {
+              "line": 92,
+              "column": 109,
+              "offset": 3233
+            },
+            "end": {
+              "line": 92,
+              "column": 136,
+              "offset": 3260
+            }
+          }
+        },
+        {
+          "type": "inlineCode",
+          "value": "includeIf \"gitdir:/Users/san.siva/work/\"",
+          "position": {
+            "start": {
+              "line": 92,
+              "column": 136,
+              "offset": 3260
+            },
+            "end": {
+              "line": 92,
+              "column": 178,
+              "offset": 3302
+            }
+          }
+        },
+        {
+          "type": "text",
+          "value": " directive detects that the repository is inside the work directory and automatically applies the settings from ",
+          "position": {
+            "start": {
+              "line": 92,
+              "column": 178,
+              "offset": 3302
+            },
+            "end": {
+              "line": 92,
+              "column": 290,
+              "offset": 3414
+            }
+          }
+        },
+        {
+          "type": "inlineCode",
+          "value": "~/.gitconfig__work",
+          "position": {
+            "start": {
+              "line": 92,
+              "column": 290,
+              "offset": 3414
+            },
+            "end": {
+              "line": 92,
+              "column": 310,
+              "offset": 3434
+            }
+          }
+        },
+        {
+          "type": "text",
+          "value": ".",
+          "position": {
+            "start": {
+              "line": 92,
+              "column": 310,
+              "offset": 3434
+            },
+            "end": {
+              "line": 92,
+              "column": 311,
+              "offset": 3435
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 92,
+          "column": 1,
+          "offset": 3125
+        },
+        "end": {
+          "line": 92,
+          "column": 311,
+          "offset": 3435
+        }
+      }
+    },
+    {
+      "type": "heading",
+      "depth": 2,
+      "children": [
+        {
+          "type": "text",
+          "value": "Managing multiple SSH keys",
+          "position": {
+            "start": {
+              "line": 94,
+              "column": 4,
+              "offset": 3440
+            },
+            "end": {
+              "line": 94,
+              "column": 30,
+              "offset": 3466
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 94,
+          "column": 1,
+          "offset": 3437
+        },
+        "end": {
+          "line": 94,
+          "column": 30,
+          "offset": 3466
+        }
+      }
+    },
+    {
+      "type": "heading",
+      "depth": 3,
+      "children": [
+        {
+          "type": "text",
+          "value": "Generate a unique SSH key for each account",
+          "position": {
+            "start": {
+              "line": 96,
+              "column": 5,
+              "offset": 3472
+            },
+            "end": {
+              "line": 96,
+              "column": 47,
+              "offset": 3514
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 96,
+          "column": 1,
+          "offset": 3468
+        },
+        "end": {
+          "line": 96,
+          "column": 47,
+          "offset": 3514
+        }
+      }
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "Start by creating a dedicated SSH key for each of your GitHub accounts. Using the ",
+          "position": {
+            "start": {
+              "line": 98,
+              "column": 1,
+              "offset": 3516
+            },
+            "end": {
+              "line": 98,
+              "column": 83,
+              "offset": 3598
+            }
+          }
+        },
+        {
+          "type": "strong",
+          "children": [
+            {
+              "type": "text",
+              "value": "ed25519",
+              "position": {
+                "start": {
+                  "line": 98,
+                  "column": 85,
+                  "offset": 3600
+                },
+                "end": {
+                  "line": 98,
+                  "column": 92,
+                  "offset": 3607
+                }
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 98,
+              "column": 83,
+              "offset": 3598
+            },
+            "end": {
+              "line": 98,
+              "column": 94,
+              "offset": 3609
+            }
+          }
+        },
+        {
+          "type": "text",
+          "value": " algorithm is highly recommended, as it is faster and more secure than the older RSA standard.",
+          "position": {
+            "start": {
+              "line": 98,
+              "column": 94,
+              "offset": 3609
+            },
+            "end": {
+              "line": 98,
+              "column": 188,
+              "offset": 3703
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 98,
+          "column": 1,
+          "offset": 3516
+        },
+        "end": {
+          "line": 98,
+          "column": 188,
+          "offset": 3703
+        }
+      }
+    },
+    {
+      "type": "code",
+      "lang": "bash",
+      "meta": null,
+      "value": "# Generate a new SSH key\n\nssh-keygen -t ed25519 -C \"san-siva@gmail.com\" -f ~/.ssh/personal\n# The above command will create two files:\n# ~/.ssh/personal\n# ~/.ssh/personal.pub\n\nssh-keygen -t ed25519 -C \"san-siva@work.com\" -f ~/.ssh/work\nssh-keygen -t ed25519 -C \"san-siva@sidegig.com\" -f ~/.ssh/sidegig",
+      "position": {
+        "start": {
+          "line": 100,
+          "column": 1,
+          "offset": 3705
+        },
+        "end": {
+          "line": 110,
+          "column": 4,
+          "offset": 4017
+        }
+      }
+    },
+    {
+      "type": "heading",
+      "depth": 3,
+      "children": [
+        {
+          "type": "text",
+          "value": "Add your public SSH key to GitHub",
+          "position": {
+            "start": {
+              "line": 112,
+              "column": 5,
+              "offset": 4023
+            },
+            "end": {
+              "line": 112,
+              "column": 38,
+              "offset": 4056
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 112,
+          "column": 1,
+          "offset": 4019
+        },
+        "end": {
+          "line": 112,
+          "column": 38,
+          "offset": 4056
+        }
+      }
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "Once generated, copy the contents of the public key file (usually ending in ",
+          "position": {
+            "start": {
+              "line": 114,
+              "column": 1,
+              "offset": 4058
+            },
+            "end": {
+              "line": 114,
+              "column": 77,
+              "offset": 4134
+            }
+          }
+        },
+        {
+          "type": "inlineCode",
+          "value": ".pub",
+          "position": {
+            "start": {
+              "line": 114,
+              "column": 77,
+              "offset": 4134
+            },
+            "end": {
+              "line": 114,
+              "column": 83,
+              "offset": 4140
+            }
+          }
+        },
+        {
+          "type": "text",
+          "value": ") to your clipboard. Then, log into the corresponding GitHub account and paste the key into your settings at ",
+          "position": {
+            "start": {
+              "line": 114,
+              "column": 83,
+              "offset": 4140
+            },
+            "end": {
+              "line": 114,
+              "column": 192,
+              "offset": 4249
+            }
+          }
+        },
+        {
+          "type": "inlineCode",
+          "value": "https://github.com/settings/keys",
+          "position": {
+            "start": {
+              "line": 114,
+              "column": 192,
+              "offset": 4249
+            },
+            "end": {
+              "line": 114,
+              "column": 226,
+              "offset": 4283
+            }
+          }
+        },
+        {
+          "type": "text",
+          "value": ".",
+          "position": {
+            "start": {
+              "line": 114,
+              "column": 226,
+              "offset": 4283
+            },
+            "end": {
+              "line": 114,
+              "column": 227,
+              "offset": 4284
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 114,
+          "column": 1,
+          "offset": 4058
+        },
+        "end": {
+          "line": 114,
+          "column": 227,
+          "offset": 4284
+        }
+      }
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "Check out the official GitHub documentation for more detailed instructions.",
+          "position": {
+            "start": {
+              "line": 116,
+              "column": 1,
+              "offset": 4286
+            },
+            "end": {
+              "line": 116,
+              "column": 76,
+              "offset": 4361
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 116,
+          "column": 1,
+          "offset": 4286
+        },
+        "end": {
+          "line": 116,
+          "column": 76,
+          "offset": 4361
+        }
+      }
+    },
+    {
+      "type": "heading",
+      "depth": 3,
+      "children": [
+        {
+          "type": "text",
+          "value": "Add the SSH key to your SSH agent",
+          "position": {
+            "start": {
+              "line": 118,
+              "column": 5,
+              "offset": 4367
+            },
+            "end": {
+              "line": 118,
+              "column": 38,
+              "offset": 4400
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 118,
+          "column": 1,
+          "offset": 4363
+        },
+        "end": {
+          "line": 118,
+          "column": 38,
+          "offset": 4400
+        }
+      }
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "The SSH agent is a program that manages your SSH keys, allowing you to authenticate with GitHub without having to enter your password every time.",
+          "position": {
+            "start": {
+              "line": 120,
+              "column": 1,
+              "offset": 4402
+            },
+            "end": {
+              "line": 120,
+              "column": 146,
+              "offset": 4547
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 120,
+          "column": 1,
+          "offset": 4402
+        },
+        "end": {
+          "line": 120,
+          "column": 146,
+          "offset": 4547
+        }
+      }
+    },
+    {
+      "type": "code",
+      "lang": "bash",
+      "meta": null,
+      "value": "# Add the SSH key to the SSH agent\n\n# macOS\nssh-add -K ~/.ssh/personal\nssh-add -K ~/.ssh/work\nssh-add -K ~/.ssh/sidegig\n\n# Linux\neval \"$(ssh-agent -s)\"\nssh-add ~/.ssh/personal\nssh-add ~/.ssh/work\nssh-add ~/.ssh/sidegig",
+      "position": {
+        "start": {
+          "line": 122,
+          "column": 1,
+          "offset": 4549
+        },
+        "end": {
+          "line": 135,
+          "column": 4,
+          "offset": 4779
+        }
+      }
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "On macOS, add ",
+          "position": {
+            "start": {
+              "line": 137,
+              "column": 1,
+              "offset": 4781
+            },
+            "end": {
+              "line": 137,
+              "column": 15,
+              "offset": 4795
+            }
+          }
+        },
+        {
+          "type": "strong",
+          "children": [
+            {
+              "type": "text",
+              "value": "UseKeychain yes",
+              "position": {
+                "start": {
+                  "line": 137,
+                  "column": 17,
+                  "offset": 4797
+                },
+                "end": {
+                  "line": 137,
+                  "column": 32,
+                  "offset": 4812
+                }
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 137,
+              "column": 15,
+              "offset": 4795
+            },
+            "end": {
+              "line": 137,
+              "column": 34,
+              "offset": 4814
+            }
+          }
+        },
+        {
+          "type": "text",
+          "value": " and ",
+          "position": {
+            "start": {
+              "line": 137,
+              "column": 34,
+              "offset": 4814
+            },
+            "end": {
+              "line": 137,
+              "column": 39,
+              "offset": 4819
+            }
+          }
+        },
+        {
+          "type": "strong",
+          "children": [
+            {
+              "type": "text",
+              "value": "AddKeysToAgent yes",
+              "position": {
+                "start": {
+                  "line": 137,
+                  "column": 41,
+                  "offset": 4821
+                },
+                "end": {
+                  "line": 137,
+                  "column": 59,
+                  "offset": 4839
+                }
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 137,
+              "column": 39,
+              "offset": 4819
+            },
+            "end": {
+              "line": 137,
+              "column": 61,
+              "offset": 4841
+            }
+          }
+        },
+        {
+          "type": "text",
+          "value": " to your ",
+          "position": {
+            "start": {
+              "line": 137,
+              "column": 61,
+              "offset": 4841
+            },
+            "end": {
+              "line": 137,
+              "column": 70,
+              "offset": 4850
+            }
+          }
+        },
+        {
+          "type": "strong",
+          "children": [
+            {
+              "type": "text",
+              "value": "~/.ssh/config",
+              "position": {
+                "start": {
+                  "line": 137,
+                  "column": 72,
+                  "offset": 4852
+                },
+                "end": {
+                  "line": 137,
+                  "column": 85,
+                  "offset": 4865
+                }
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 137,
+              "column": 70,
+              "offset": 4850
+            },
+            "end": {
+              "line": 137,
+              "column": 87,
+              "offset": 4867
+            }
+          }
+        },
+        {
+          "type": "text",
+          "value": " to have your keys persist across reboots automatically.",
+          "position": {
+            "start": {
+              "line": 137,
+              "column": 87,
+              "offset": 4867
+            },
+            "end": {
+              "line": 137,
+              "column": 143,
+              "offset": 4923
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 137,
+          "column": 1,
+          "offset": 4781
+        },
+        "end": {
+          "line": 137,
+          "column": 143,
+          "offset": 4923
+        }
+      }
+    },
+    {
+      "type": "heading",
+      "depth": 3,
+      "children": [
+        {
+          "type": "text",
+          "value": "Create multiple SSH aliases for each GitHub account",
+          "position": {
+            "start": {
+              "line": 139,
+              "column": 5,
+              "offset": 4929
+            },
+            "end": {
+              "line": 139,
+              "column": 56,
+              "offset": 4980
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 139,
+          "column": 1,
+          "offset": 4925
+        },
+        "end": {
+          "line": 139,
+          "column": 56,
+          "offset": 4980
+        }
+      }
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "Now that you have your SSH keys set up, you need to update your ",
+          "position": {
+            "start": {
+              "line": 141,
+              "column": 1,
+              "offset": 4982
+            },
+            "end": {
+              "line": 141,
+              "column": 65,
+              "offset": 5046
+            }
+          }
+        },
+        {
+          "type": "inlineCode",
+          "value": "~/.ssh/config",
+          "position": {
+            "start": {
+              "line": 141,
+              "column": 65,
+              "offset": 5046
+            },
+            "end": {
+              "line": 141,
+              "column": 80,
+              "offset": 5061
+            }
+          }
+        },
+        {
+          "type": "text",
+          "value": " file to use the correct key for each alias.",
+          "position": {
+            "start": {
+              "line": 141,
+              "column": 80,
+              "offset": 5061
+            },
+            "end": {
+              "line": 141,
+              "column": 124,
+              "offset": 5105
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 141,
+          "column": 1,
+          "offset": 4982
+        },
+        "end": {
+          "line": 141,
+          "column": 124,
+          "offset": 5105
+        }
+      }
+    },
+    {
+      "type": "code",
+      "lang": "bash",
+      "meta": null,
+      "value": "# ~/.ssh/config\n\nHost github\n    HostName github.com # Default\n    User git\n    IdentityFile ~/.ssh/personal\n    IdentitiesOnly no\n\nHost github-work # This is an alias for your work account\n    HostName github.com\n    User git\n    IdentityFile ~/.ssh/work\n    IdentitiesOnly yes\n\nHost github-sidegig # This is an alias for your side project\n    HostName github.com\n    User git\n    IdentityFile ~/.ssh/sidegig\n    IdentitiesOnly yes",
+      "position": {
+        "start": {
+          "line": 143,
+          "column": 1,
+          "offset": 5107
+        },
+        "end": {
+          "line": 163,
+          "column": 4,
+          "offset": 5551
+        }
+      }
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "Here is the best part: because of the ",
+          "position": {
+            "start": {
+              "line": 165,
+              "column": 1,
+              "offset": 5553
+            },
+            "end": {
+              "line": 165,
+              "column": 39,
+              "offset": 5591
+            }
+          }
+        },
+        {
+          "type": "inlineCode",
+          "value": "insteadOf",
+          "position": {
+            "start": {
+              "line": 165,
+              "column": 39,
+              "offset": 5591
+            },
+            "end": {
+              "line": 165,
+              "column": 50,
+              "offset": 5602
+            }
+          }
+        },
+        {
+          "type": "text",
+          "value": " directive in our conditionally loaded workspace configs, you don't even need to change your clone URLs! You can continue using standard ",
+          "position": {
+            "start": {
+              "line": 165,
+              "column": 50,
+              "offset": 5602
+            },
+            "end": {
+              "line": 165,
+              "column": 187,
+              "offset": 5739
+            }
+          }
+        },
+        {
+          "type": "inlineCode",
+          "value": "git@github.com",
+          "position": {
+            "start": {
+              "line": 165,
+              "column": 187,
+              "offset": 5739
+            },
+            "end": {
+              "line": 165,
+              "column": 203,
+              "offset": 5755
+            }
+          }
+        },
+        {
+          "type": "text",
+          "value": " links, and Git will automatically swap in ",
+          "position": {
+            "start": {
+              "line": 165,
+              "column": 203,
+              "offset": 5755
+            },
+            "end": {
+              "line": 165,
+              "column": 246,
+              "offset": 5798
+            }
+          }
+        },
+        {
+          "type": "inlineCode",
+          "value": "github-work",
+          "position": {
+            "start": {
+              "line": 165,
+              "column": 246,
+              "offset": 5798
+            },
+            "end": {
+              "line": 165,
+              "column": 259,
+              "offset": 5811
+            }
+          }
+        },
+        {
+          "type": "text",
+          "value": " or ",
+          "position": {
+            "start": {
+              "line": 165,
+              "column": 259,
+              "offset": 5811
+            },
+            "end": {
+              "line": 165,
+              "column": 263,
+              "offset": 5815
+            }
+          }
+        },
+        {
+          "type": "inlineCode",
+          "value": "github-sidegig",
+          "position": {
+            "start": {
+              "line": 165,
+              "column": 263,
+              "offset": 5815
+            },
+            "end": {
+              "line": 165,
+              "column": 279,
+              "offset": 5831
+            }
+          }
+        },
+        {
+          "type": "text",
+          "value": " behind the scenes to trigger the correct SSH key.",
+          "position": {
+            "start": {
+              "line": 165,
+              "column": 279,
+              "offset": 5831
+            },
+            "end": {
+              "line": 165,
+              "column": 329,
+              "offset": 5881
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 165,
+          "column": 1,
+          "offset": 5553
+        },
+        "end": {
+          "line": 165,
+          "column": 329,
+          "offset": 5881
+        }
+      }
+    },
+    {
+      "type": "heading",
+      "depth": 3,
+      "children": [
+        {
+          "type": "text",
+          "value": "Update your gitconfig files to use the correct SSH key for each workspace",
+          "position": {
+            "start": {
+              "line": 167,
+              "column": 5,
+              "offset": 5887
+            },
+            "end": {
+              "line": 167,
+              "column": 78,
+              "offset": 5960
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 167,
+          "column": 1,
+          "offset": 5883
+        },
+        "end": {
+          "line": 167,
+          "column": 78,
+          "offset": 5960
+        }
+      }
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "Now that you have your SSH keys set up, you need to update your ",
+          "position": {
+            "start": {
+              "line": 169,
+              "column": 1,
+              "offset": 5962
+            },
+            "end": {
+              "line": 169,
+              "column": 65,
+              "offset": 6026
+            }
+          }
+        },
+        {
+          "type": "inlineCode",
+          "value": "~/.gitconfig",
+          "position": {
+            "start": {
+              "line": 169,
+              "column": 65,
+              "offset": 6026
+            },
+            "end": {
+              "line": 169,
+              "column": 79,
+              "offset": 6040
+            }
+          }
+        },
+        {
+          "type": "text",
+          "value": " file to use the correct alias for each directory.",
+          "position": {
+            "start": {
+              "line": 169,
+              "column": 79,
+              "offset": 6040
+            },
+            "end": {
+              "line": 169,
+              "column": 129,
+              "offset": 6090
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 169,
+          "column": 1,
+          "offset": 5962
+        },
+        "end": {
+          "line": 169,
+          "column": 129,
+          "offset": 6090
+        }
+      }
+    },
+    {
+      "type": "code",
+      "lang": "bash",
+      "meta": null,
+      "value": "# ~/.gitconfig__work\n[user]\n\temail = san-siva@work.com\n\tname = Santhosh Siva\n[pull]\n\trebase = false\n[submodule]\n\trecurse = true\n\n# Add these lines to your work config\n[url \"git@github-work:\"]\n\tinsteadOf = git@github.com:",
+      "position": {
+        "start": {
+          "line": 171,
+          "column": 1,
+          "offset": 6092
+        },
+        "end": {
+          "line": 184,
+          "column": 4,
+          "offset": 6324
+        }
+      }
+    },
+    {
+      "type": "code",
+      "lang": "bash",
+      "meta": null,
+      "value": "# ~/.gitconfig__sidegig\n[user]\n\temail = san-siva@sidegig.com\n\tname = Santhosh Siva\n[pull]\n\trebase = false\n[submodule]\n\trecurse = true\n\n# Add these lines to your sidegig config\n[url \"git@github-sidegig:\"]\n\tinsteadOf = git@github.com:",
+      "position": {
+        "start": {
+          "line": 186,
+          "column": 1,
+          "offset": 6326
+        },
+        "end": {
+          "line": 199,
+          "column": 4,
+          "offset": 6570
+        }
+      }
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "This tells Git to use the ",
+          "position": {
+            "start": {
+              "line": 201,
+              "column": 1,
+              "offset": 6572
+            },
+            "end": {
+              "line": 201,
+              "column": 27,
+              "offset": 6598
+            }
+          }
+        },
+        {
+          "type": "inlineCode",
+          "value": "~/.ssh/work",
+          "position": {
+            "start": {
+              "line": 201,
+              "column": 27,
+              "offset": 6598
+            },
+            "end": {
+              "line": 201,
+              "column": 40,
+              "offset": 6611
+            }
+          }
+        },
+        {
+          "type": "text",
+          "value": " key for your work directory, and the ",
+          "position": {
+            "start": {
+              "line": 201,
+              "column": 40,
+              "offset": 6611
+            },
+            "end": {
+              "line": 201,
+              "column": 78,
+              "offset": 6649
+            }
+          }
+        },
+        {
+          "type": "inlineCode",
+          "value": "~/.ssh/sidegig",
+          "position": {
+            "start": {
+              "line": 201,
+              "column": 78,
+              "offset": 6649
+            },
+            "end": {
+              "line": 201,
+              "column": 94,
+              "offset": 6665
+            }
+          }
+        },
+        {
+          "type": "text",
+          "value": " key for your side project.",
+          "position": {
+            "start": {
+              "line": 201,
+              "column": 94,
+              "offset": 6665
+            },
+            "end": {
+              "line": 201,
+              "column": 121,
+              "offset": 6692
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 201,
+          "column": 1,
+          "offset": 6572
+        },
+        "end": {
+          "line": 201,
+          "column": 121,
+          "offset": 6692
+        }
+      }
+    },
+    {
+      "type": "heading",
+      "depth": 3,
+      "children": [
+        {
+          "type": "text",
+          "value": "Test your setup",
+          "position": {
+            "start": {
+              "line": 203,
+              "column": 5,
+              "offset": 6698
+            },
+            "end": {
+              "line": 203,
+              "column": 20,
+              "offset": 6713
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 203,
+          "column": 1,
+          "offset": 6694
+        },
+        "end": {
+          "line": 203,
+          "column": 20,
+          "offset": 6713
+        }
+      }
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "Verify that SSH is authenticating with the correct account for each alias:",
+          "position": {
+            "start": {
+              "line": 205,
+              "column": 1,
+              "offset": 6715
+            },
+            "end": {
+              "line": 205,
+              "column": 75,
+              "offset": 6789
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 205,
+          "column": 1,
+          "offset": 6715
+        },
+        "end": {
+          "line": 205,
+          "column": 75,
+          "offset": 6789
+        }
+      }
+    },
+    {
+      "type": "code",
+      "lang": "bash",
+      "meta": null,
+      "value": "# Test the setup\nssh -T git@github        # Default, you should see the username linked to your personal github account\nssh -T git@github-work\nssh -T git@github-sidegig",
+      "position": {
+        "start": {
+          "line": 207,
+          "column": 1,
+          "offset": 6791
+        },
+        "end": {
+          "line": 212,
+          "column": 4,
+          "offset": 6971
+        }
+      }
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "If you see the right username for each, you're good to go.",
+          "position": {
+            "start": {
+              "line": 214,
+              "column": 1,
+              "offset": 6973
+            },
+            "end": {
+              "line": 214,
+              "column": 59,
+              "offset": 7031
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 214,
+          "column": 1,
+          "offset": 6973
+        },
+        "end": {
+          "line": 214,
+          "column": 59,
+          "offset": 7031
+        }
+      }
+    },
+    {
+      "type": "heading",
+      "depth": 2,
+      "children": [
+        {
+          "type": "text",
+          "value": "Conclusion",
+          "position": {
+            "start": {
+              "line": 216,
+              "column": 4,
+              "offset": 7036
+            },
+            "end": {
+              "line": 216,
+              "column": 14,
+              "offset": 7046
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 216,
+          "column": 1,
+          "offset": 7033
+        },
+        "end": {
+          "line": 216,
+          "column": 14,
+          "offset": 7046
+        }
+      }
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "With this setup in place, you never have to worry about mixing up your Git identities again. Your commits will automatically be authored with the correct email, and your code will be pushed using the right SSH key based entirely on the folder you are working in.",
+          "position": {
+            "start": {
+              "line": 218,
+              "column": 1,
+              "offset": 7048
+            },
+            "end": {
+              "line": 218,
+              "column": 263,
+              "offset": 7310
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 218,
+          "column": 1,
+          "offset": 7048
+        },
+        "end": {
+          "line": 218,
+          "column": 263,
+          "offset": 7310
+        }
+      }
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "text",
+          "value": "The key insight here is the separation of concerns: \"Git configs handle identity, and SSH configs handle access.\" Set it up once, and it all just works seamlessly in the background!",
+          "position": {
+            "start": {
+              "line": 220,
+              "column": 1,
+              "offset": 7312
+            },
+            "end": {
+              "line": 220,
+              "column": 182,
+              "offset": 7493
+            }
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 220,
+          "column": 1,
+          "offset": 7312
+        },
+        "end": {
+          "line": 220,
+          "column": 182,
+          "offset": 7493
+        }
+      }
+    }
+  ],
+  "position": {
+    "start": {
+      "line": 1,
+      "column": 1,
+      "offset": 0
+    },
+    "end": {
+      "line": 221,
+      "column": 1,
+      "offset": 7494
+    }
+  }
+}

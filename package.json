@@ -1,0 +1,49 @@
+{
+	"name": "blogkit-md",
+	"version": "0.1.0",
+	"description": "Converts markdown files into JSX blog posts for Blogkit",
+	"scripts": {
+		"dev": "next dev",
+		"build": "next build",
+		"start": "next start",
+		"cli": "tsx src/index.ts",
+		"lint": "eslint . --config eslint.config.ts",
+		"fix": "eslint . --config eslint.config.ts --fix"
+	},
+	"dependencies": {
+		"@san-siva/blogkit": "^1.1.20",
+		"@san-siva/stylekit": "^1.0.8",
+		"next": "^16.0.10",
+		"react": "^19.0.0",
+		"react-dom": "^19.0.0",
+		"remark-parse": "^11.0.0",
+		"sass": "^1.95.1",
+		"unified": "^11.0.5"
+	},
+	"devDependencies": {
+		"@eslint/js": "^9.0.0",
+		"@types/eslint": "^9.6.1",
+		"@types/eslint__js": "^9.14.0",
+		"@types/node": "^22",
+		"@types/react": "^19",
+		"@types/react-dom": "^19",
+		"eslint": "^9.0.0",
+		"eslint-config-next": "^16.0.10",
+		"eslint-config-prettier": "^10.0.0",
+		"eslint-import-resolver-typescript": "^4.0.0",
+		"eslint-plugin-import": "^2.0.0",
+		"eslint-plugin-jsx-a11y": "^6.10.0",
+		"eslint-plugin-no-await-in-promise": "^3.0.0",
+		"eslint-plugin-prettier": "^5.0.0",
+		"eslint-plugin-react": "^7.0.0",
+		"eslint-plugin-react-hooks": "^5.0.0",
+		"eslint-plugin-simple-import-sort": "^12.0.0",
+		"eslint-plugin-unicorn": "^62.0.0",
+		"jiti": "^2.0.0",
+		"@types/mdast": "^4.0.4",
+		"prettier": "^3.0.0",
+		"tsx": "^4.0.0",
+		"typescript": "^5.0.0",
+		"typescript-eslint": "^8.0.0"
+	}
+}
