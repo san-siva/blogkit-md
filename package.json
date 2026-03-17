@@ -3,11 +3,10 @@
 	"version": "0.1.0",
 	"description": "Converts markdown files into JSX blog posts for Blogkit",
 	"scripts": {
-		"dev": "next dev",
-		"build": "next build",
+		"dev": "tsx scripts/dev.ts",
+		"build": "MARKDOWN_FILE=data/test.md next build",
 		"start": "next start",
-		"cli": "tsx src/index.ts",
-		"lint": "eslint . --config eslint.config.ts",
+"lint": "eslint . --config eslint.config.ts",
 		"fix": "eslint . --config eslint.config.ts --fix"
 	},
 	"dependencies": {

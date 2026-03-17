@@ -1,29 +1,24 @@
-import { Blog, BlogHeader } from '@san-siva/blogkit';
-import { readFileSync } from 'node:fs';
-import path from 'node:path';
-import remarkParse from 'remark-parse';
-import { unified } from 'unified';
+import { Blog, BlogHeader, Callout } from '@san-siva/blogkit';
 
-import { MarkdownSections, renderMarkdownAst } from '@/lib/markdownRenderer';
+import { useMarkdownFile } from '@/hooks/useMarkdownFile';
+import { MarkdownSections } from '@/utils/renderMarkdown';
 
 const Page = () => {
-	const markdownContent = readFileSync(
-		path.join(process.cwd(), 'data/test.md'),
-		'utf8'
-	);
+	const result = useMarkdownFile(process.env.MARKDOWN_FILE);
 
-	const processor = unified().use(remarkParse);
-	const ast = processor.parse(markdownContent);
-	const rendered = renderMarkdownAst(ast);
+	if (!result.success) {
+		return (
+			<Blog>
+				<Callout type="warning">{result.error}</Callout>
+			</Blog>
+		);
+	}
+
+	const { rendered } = result;
 
 	return (
 		<Blog>
-			{rendered.h1 && (
-				<BlogHeader
-					title={[rendered.h1]}
-					desc={rendered.description ? [rendered.description] : ['']}
-				/>
-			)}
+			{rendered.h1 && <BlogHeader title={[rendered.h1]} desc={[]} />}
 			<MarkdownSections rendered={rendered} />
 		</Blog>
 	);
