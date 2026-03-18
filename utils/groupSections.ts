@@ -47,8 +47,14 @@ export const groupSections = (nodes: RootContent[]): GroupedSections => {
 
 			switch (node.depth) {
 				case 1: {
-					pageTitle = extractText(node.children);
-					afterH1 = true;
+					if (sections.length === 0) {
+						pageTitle = extractText(node.children);
+						afterH1 = true;
+					} else {
+						currentSubsection = null;
+						seenH4InCurrentSection = false;
+						currentSection = addSection(extractText(node.children), sections);
+					}
 					break;
 				}
 				case 2: {
@@ -71,6 +77,11 @@ export const groupSections = (nodes: RootContent[]): GroupedSections => {
 				}
 				case 4: {
 					seenH4InCurrentSection = true;
+					(currentSubsection ?? currentSection)?.nodes.push(node);
+					break;
+				}
+				case 5:
+				case 6: {
 					(currentSubsection ?? currentSection)?.nodes.push(node);
 					break;
 				}

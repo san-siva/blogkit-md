@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { BlogSection, CodeBlock, Mermaid } from '@san-siva/blogkit';
+import { BlogSection, Callout, CodeBlock, Mermaid, Table } from '@san-siva/blogkit';
 import type { Root, RootContent } from 'mdast';
 
 import type { Section } from './groupSections';
@@ -12,10 +12,14 @@ import styles from '@san-siva/stylekit/styles/index.module.scss';
 function renderNode(
 	node: RootContent,
 	key: number,
-	nextNode?: RootContent
+	nextNode?: RootContent,
+	inList = false
 ): React.ReactNode {
 	switch (node.type) {
 		case 'paragraph': {
+			if (inList) {
+				return <p key={key}>{renderPhrasingContent(node.children)}</p>;
+			}
 			const marginClass =
 				nextNode?.type === 'paragraph'
 					? styles['margin-bottom--1']
@@ -58,6 +62,36 @@ function renderNode(
 		case 'thematicBreak': {
 			return <hr key={key} className={styles['margin-bottom--2']} />;
 		}
+		case 'table': {
+			const [headerRow, ...bodyRows] = node.children;
+			const headers = headerRow?.children.map(cell =>
+				renderPhrasingContent(cell.children)
+			);
+			const rows = bodyRows.map(row =>
+				row.children.map((cell, index) => (
+					<p key={index}>{renderPhrasingContent(cell.children)}</p>
+				))
+			);
+			return (
+				<Table
+					key={key}
+					headers={headers}
+					rows={rows}
+					hasMarginUp
+					hasMarginDown
+				/>
+			);
+		}
+		case 'blockquote': {
+			const children = node.children as RootContent[];
+			return (
+				<Callout key={key} type="info" hasMarginUp hasMarginDown>
+					{children.map((child, index) =>
+						renderNode(child, index, children[index + 1])
+					)}
+				</Callout>
+			);
+		}
 		case 'list': {
 			const Tag = node.ordered ? 'ol' : 'ul';
 			return (
@@ -65,7 +99,7 @@ function renderNode(
 					{node.children.map((item, index) => (
 						<li key={index}>
 							{item.children.map((child, index) =>
-								renderNode(child as RootContent, index)
+								renderNode(child as RootContent, index, undefined, true)
 							)}
 						</li>
 					))}
