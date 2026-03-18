@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { BlogSection, CodeBlock } from '@san-siva/blogkit';
+import { BlogSection, CodeBlock, Mermaid } from '@san-siva/blogkit';
 import type { Root, RootContent } from 'mdast';
 
 import type { Section } from './groupSections';
@@ -27,6 +27,17 @@ function renderNode(
 			);
 		}
 		case 'code': {
+			if (node.lang === 'mermaid') {
+				return (
+					<Mermaid
+						key={key}
+						id={`mermaid-${key}`}
+						code={node.value}
+						hasMarginUp
+						hasMarginDown
+					/>
+				);
+			}
 			return (
 				<CodeBlock
 					key={key}
@@ -36,6 +47,9 @@ function renderNode(
 					hasMarginDown
 				/>
 			);
+		}
+		case 'thematicBreak': {
+			return <hr key={key} className={styles['margin-bottom--2']} />;
 		}
 		case 'list': {
 			const Tag = node.ordered ? 'ol' : 'ul';
@@ -73,21 +87,20 @@ function renderSection(section: Section, key: number): React.ReactNode {
 }
 
 export type RenderedMarkdown = {
-	h1: string | null;
+	pageTitle: string | null;
 	beforeFirstHeading: React.ReactNode[];
-	prelude: React.ReactNode[];
+	textBeforeFirstSection: React.ReactNode[];
 	sections: React.ReactNode[];
 };
 
 export const renderMarkdownAst = (ast: Root): RenderedMarkdown => {
-	const { h1, beforeFirstHeading, prelude, sections } = groupSections(
-		ast.children
-	);
+	const { pageTitle, beforeFirstHeading, textBeforeFirstSection, sections } =
+		groupSections(ast.children);
 
 	return {
-		h1,
+		pageTitle,
 		beforeFirstHeading: renderNodes(beforeFirstHeading),
-		prelude: renderNodes(prelude),
+		textBeforeFirstSection: renderNodes(textBeforeFirstSection),
 		sections: sections.map((section, index) => renderSection(section, index)),
 	};
 };
@@ -101,8 +114,8 @@ export const MarkdownSections = ({
 		{rendered.beforeFirstHeading.length > 0 && (
 			<BlogSection>{rendered.beforeFirstHeading}</BlogSection>
 		)}
-		{rendered.prelude.length > 0 && (
-			<BlogSection>{rendered.prelude}</BlogSection>
+		{rendered.textBeforeFirstSection.length > 0 && (
+			<BlogSection>{rendered.textBeforeFirstSection}</BlogSection>
 		)}
 		{rendered.sections}
 	</>

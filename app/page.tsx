@@ -18,7 +18,7 @@ const Page = () => {
 
 	return (
 		<Blog>
-			{rendered.h1 && <BlogHeader title={[rendered.h1]} desc={[]} />}
+			{rendered.pageTitle && <BlogHeader title={[rendered.pageTitle]} desc={[]} />}
 			<MarkdownSections rendered={rendered} />
 		</Blog>
 	);

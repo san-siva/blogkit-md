@@ -9,16 +9,16 @@ export type Section = {
 };
 
 export type GroupedSections = {
-	h1: string | null;
+	pageTitle: string | null;
 	beforeFirstHeading: RootContent[];
-	prelude: RootContent[];
+	textBeforeFirstSection: RootContent[];
 	sections: Section[];
 };
 
 export const groupSections = (nodes: RootContent[]): GroupedSections => {
-	let h1: string | null = null;
+	let pageTitle: string | null = null;
 	const beforeFirstHeading: RootContent[] = [];
-	const prelude: RootContent[] = [];
+	const textBeforeFirstSection: RootContent[] = [];
 	const sections: Section[] = [];
 	let currentSection: Section | null = null;
 	let currentSubsection: Section | null = null;
@@ -31,7 +31,7 @@ export const groupSections = (nodes: RootContent[]): GroupedSections => {
 
 			switch (node.depth) {
 			case 1: {
-				h1 = extractText(node.children);
+				pageTitle = extractText(node.children);
 				afterH1 = true;
 			
 			break;
@@ -67,9 +67,9 @@ export const groupSections = (nodes: RootContent[]): GroupedSections => {
 		} else if (currentSection) {
 			currentSection.nodes.push(node);
 		} else if (afterH1) {
-			prelude.push(node);
+			textBeforeFirstSection.push(node);
 		}
 	}
 
-	return { h1, beforeFirstHeading, prelude, sections };
+	return { pageTitle, beforeFirstHeading, textBeforeFirstSection, sections };
 };

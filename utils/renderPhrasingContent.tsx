@@ -28,6 +28,19 @@ export function renderPhrasingContent(
 					</a>
 				);
 			}
+			case 'break': {
+				return <br key={index} />;
+			}
+			case 'image': {
+				return (
+					<img
+						key={index}
+						src={node.url}
+						alt={node.alt ?? ''}
+						style={{ maxWidth: '300px' }}
+					/>
+				);
+			}
 			default: {
 				return null;
 			}
