@@ -8,6 +8,9 @@ const markdownFile = fileArgument ? fileArgument.replace('--file=', '') : 'data/
 const markdownPath = path.join(process.cwd(), markdownFile);
 const triggerPath = path.join(process.cwd(), 'utils/devReloadTrigger.ts');
 
+// Write on startup so fresh clones have the file before Next.js compiles.
+writeFileSync(triggerPath, `export const reloadTrigger = '${Date.now()}';\n`);
+
 let lastMtime: number | null = null;
 
 const checkMarkdownFile = () => {
