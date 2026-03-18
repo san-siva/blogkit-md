@@ -24,6 +24,7 @@ export const groupSections = (nodes: RootContent[]): GroupedSections => {
 	let currentSubsection: Section | null = null;
 	let seenFirstHeading = false;
 	let afterH1 = false;
+	let seenH4InCurrentSection = false;
 
 	for (const node of nodes) {
 		if (node.type === 'heading') {
@@ -33,11 +34,12 @@ export const groupSections = (nodes: RootContent[]): GroupedSections => {
 			case 1: {
 				pageTitle = extractText(node.children);
 				afterH1 = true;
-			
+
 			break;
 			}
 			case 2: {
 				currentSubsection = null;
+				seenH4InCurrentSection = false;
 				currentSection = {
 					title: extractText(node.children),
 					nodes: [],
@@ -45,17 +47,35 @@ export const groupSections = (nodes: RootContent[]): GroupedSections => {
 				};
 				sections.push(currentSection);
 				afterH1 = false;
-			
+
 			break;
 			}
 			case 3: {
-				currentSubsection = {
-					title: extractText(node.children),
-					nodes: [],
-					subsections: [],
-				};
-				currentSection?.subsections.push(currentSubsection);
-			
+				if (seenH4InCurrentSection) {
+					currentSubsection = null;
+					seenH4InCurrentSection = false;
+					currentSection = {
+						title: extractText(node.children),
+						nodes: [],
+						subsections: [],
+					};
+					sections.push(currentSection);
+				} else {
+					currentSubsection = {
+						title: extractText(node.children),
+						nodes: [],
+						subsections: [],
+					};
+					currentSection?.subsections.push(currentSubsection);
+				}
+
+			break;
+			}
+			case 4: {
+				seenH4InCurrentSection = true;
+				const target = currentSubsection ?? currentSection;
+				target?.nodes.push(node);
+
 			break;
 			}
 			// No default

@@ -48,6 +48,13 @@ function renderNode(
 				/>
 			);
 		}
+		case 'heading': {
+			return (
+				<p key={key} className={styles['margin-bottom--2']}>
+					<strong>{renderPhrasingContent(node.children)}</strong>
+				</p>
+			);
+		}
 		case 'thematicBreak': {
 			return <hr key={key} className={styles['margin-bottom--2']} />;
 		}
