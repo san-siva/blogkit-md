@@ -1,10 +1,10 @@
 import { Blog, BlogHeader, Callout } from '@san-siva/blogkit';
 
-import { useMarkdownFile } from '@/hooks/useMarkdownFile';
+import { readMarkdownFile } from '@/hooks/readMarkdownFile';
 import { MarkdownSections } from '@/utils/renderMarkdown';
 
-const Page = () => {
-	const result = useMarkdownFile(process.env.MARKDOWN_FILE);
+const Page = async () => {
+	const result = await readMarkdownFile(process.env.MARKDOWN_FILE);
 
 	if (!result.success) {
 		return (

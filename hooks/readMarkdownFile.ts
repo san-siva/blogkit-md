@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs';
+import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 
 import '@/utils/devReloadTrigger';
@@ -10,9 +10,9 @@ type MarkdownFileResult =
 	| { success: true; rendered: RenderedMarkdown }
 	| { success: false; error: string };
 
-export const useMarkdownFile = (
+export const readMarkdownFile = async (
 	filePath: string | undefined
-): MarkdownFileResult => {
+): Promise<MarkdownFileResult> => {
 	if (!filePath) {
 		return {
 			success: false,
@@ -25,7 +25,7 @@ export const useMarkdownFile = (
 
 	let content: string;
 	try {
-		content = readFileSync(absolutePath, 'utf8');
+		content = await readFile(absolutePath, 'utf8');
 	} catch {
 		return {
 			success: false,

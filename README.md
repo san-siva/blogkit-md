@@ -34,6 +34,59 @@ npm run lint   # check
 npm run fix    # auto-fix
 ```
 
+## Using BlogPost in your own Next.js app
+
+`blogkit-md` exposes a `BlogPost` server component you can drop into any Next.js project.
+
+### Install
+
+```bash
+npm install @san-siva/blogkit-md
+```
+
+Or as a local package:
+
+```json
+"@san-siva/blogkit-md": "file:../blogkit-md"
+```
+
+Add it to `transpilePackages` in your `next.config.ts`:
+
+```ts
+const nextConfig = {
+	transpilePackages: ['@san-siva/blogkit-md'],
+};
+```
+
+### Usage
+
+```tsx
+import { BlogPost } from '@san-siva/blogkit-md';
+
+export default function Page() {
+	return (
+		<BlogPost
+			filePath="content/my-post.md"
+			jsonLd={{
+				'@context': 'https://schema.org',
+				'@type': 'BlogPosting',
+				headline: 'My Post',
+				description: 'Post description',
+				datePublished: '2026-01-01',
+				author: { '@type': 'Person', name: 'Your Name' },
+			}}
+		/>
+	);
+}
+```
+
+### Props
+
+| Prop       | Type                 | Required | Description                                                                  |
+| :--------- | :------------------- | :------: | :--------------------------------------------------------------------------- |
+| `filePath` | `string`             |   Yes    | Path to the markdown file. Relative paths are resolved from `process.cwd()`. |
+| `jsonLd`   | `WithContext<Thing>` |    No    | Optional JSON-LD schema passed to `<Blog>` for structured data / SEO.        |
+
 ## Supported markdown features
 
 | Feature         | Syntax                             |

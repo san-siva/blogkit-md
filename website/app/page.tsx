@@ -1,8 +1,10 @@
+import type { Metadata } from 'next';
+
 import { BlogPost } from '@san-siva/blogkit-md';
 
 import { BLOGKIT_MD, SITE_URL, generateMetadata } from './data';
 
-export const metadata = generateMetadata(BLOGKIT_MD);
+export const metadata: Metadata = generateMetadata(BLOGKIT_MD);
 
 export default function Home() {
 	return (

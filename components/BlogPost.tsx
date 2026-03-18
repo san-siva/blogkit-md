@@ -1,5 +1,5 @@
 import { Blog, BlogHeader, Callout } from '@san-siva/blogkit';
-import { readFileSync } from 'node:fs';
+import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import type { Thing, WithContext } from 'schema-dts';
 
@@ -11,14 +11,14 @@ type BlogPostProperties = {
 	jsonLd?: WithContext<Thing>;
 };
 
-const BlogPost = ({ filePath, jsonLd }: BlogPostProperties) => {
+const BlogPost = async ({ filePath, jsonLd }: BlogPostProperties) => {
 	const absolutePath = path.isAbsolute(filePath)
 		? filePath
 		: path.join(process.cwd(), filePath);
 
 	let content: string;
 	try {
-		content = readFileSync(absolutePath, 'utf8');
+		content = await readFile(absolutePath, 'utf8');
 	} catch {
 		return (
 			<Blog>
