@@ -15,6 +15,21 @@ export type GroupedSections = {
 	sections: Section[];
 };
 
+const makeSection = (title: string): Section => ({
+	title,
+	nodes: [],
+	subsections: [],
+});
+
+// Closes over `sections` (const array — mutation only, CFA-safe).
+// Callers assign the return value to `currentSection` directly in the
+// outer scope so TypeScript's CFA can track the narrowing correctly.
+const addSection = (title: string, sections: Section[]): Section => {
+	const section = makeSection(title);
+	sections.push(section);
+	return section;
+};
+
 export const groupSections = (nodes: RootContent[]): GroupedSections => {
 	let pageTitle: string | null = null;
 	const beforeFirstHeading: RootContent[] = [];
@@ -31,62 +46,55 @@ export const groupSections = (nodes: RootContent[]): GroupedSections => {
 			seenFirstHeading = true;
 
 			switch (node.depth) {
-			case 1: {
-				pageTitle = extractText(node.children);
-				afterH1 = true;
-
-			break;
-			}
-			case 2: {
-				currentSubsection = null;
-				seenH4InCurrentSection = false;
-				currentSection = {
-					title: extractText(node.children),
-					nodes: [],
-					subsections: [],
-				};
-				sections.push(currentSection);
-				afterH1 = false;
-
-			break;
-			}
-			case 3: {
-				if (seenH4InCurrentSection) {
+				case 1: {
+					pageTitle = extractText(node.children);
+					afterH1 = true;
+					break;
+				}
+				case 2: {
 					currentSubsection = null;
 					seenH4InCurrentSection = false;
-					currentSection = {
-						title: extractText(node.children),
-						nodes: [],
-						subsections: [],
-					};
-					sections.push(currentSection);
-				} else {
-					currentSubsection = {
-						title: extractText(node.children),
-						nodes: [],
-						subsections: [],
-					};
-					currentSection?.subsections.push(currentSubsection);
+					currentSection = addSection(extractText(node.children), sections);
+					afterH1 = false;
+					break;
 				}
+				case 3: {
+					if (seenH4InCurrentSection) {
+						currentSubsection = null;
+						seenH4InCurrentSection = false;
+						currentSection = addSection(extractText(node.children), sections);
+					} else {
+						currentSubsection = makeSection(extractText(node.children));
+						currentSection?.subsections.push(currentSubsection);
+					}
+					break;
+				}
+				case 4: {
+					seenH4InCurrentSection = true;
+					(currentSubsection ?? currentSection)?.nodes.push(node);
+					break;
+				}
+				// No default
+			}
+			continue;
+		}
 
-			break;
-			}
-			case 4: {
-				seenH4InCurrentSection = true;
-				const target = currentSubsection ?? currentSection;
-				target?.nodes.push(node);
-
-			break;
-			}
-			// No default
-			}
-		} else if (!seenFirstHeading) {
+		if (!seenFirstHeading) {
 			beforeFirstHeading.push(node);
-		} else if (currentSubsection) {
+			continue;
+		}
+
+		if (currentSubsection) {
 			currentSubsection.nodes.push(node);
-		} else if (currentSection) {
+			continue;
+		}
+
+		if (currentSection) {
 			currentSection.nodes.push(node);
-		} else if (afterH1) {
+			continue;
+		}
+
+		if (afterH1) {
 			textBeforeFirstSection.push(node);
 		}
 	}
