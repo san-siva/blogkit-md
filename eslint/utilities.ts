@@ -99,7 +99,7 @@ export const defaultRules: Linter.RulesRecord = {
 			},
 		},
 	],
-	'unicorn/prevent-abbreviations': [1],
+	'unicorn/prevent-abbreviations': [1, { allowList: { dev: true } }],
 	'unicorn/no-array-reduce': [1],
 	'unicorn/catch-error-name': [0],
 	'unicorn/no-for-loop': [1],

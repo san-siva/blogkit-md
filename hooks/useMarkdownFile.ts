@@ -2,8 +2,8 @@ import { readFileSync } from 'node:fs';
 import path from 'node:path';
 
 import { parseMarkdown } from '@/utils/parseMarkdown';
-import { renderMarkdownAst } from '@/utils/renderMarkdown';
 import type { RenderedMarkdown } from '@/utils/renderMarkdown';
+import { renderMarkdownAst } from '@/utils/renderMarkdown';
 
 type MarkdownFileResult =
 	| { success: true; rendered: RenderedMarkdown }

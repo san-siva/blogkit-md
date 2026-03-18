@@ -1,14 +1,13 @@
 import React from 'react';
 
-import type { PhrasingContent, Root, RootContent } from 'mdast';
-
 import { BlogSection, CodeBlock } from '@san-siva/blogkit';
+import type { Root, RootContent } from 'mdast';
+
+import type { Section } from './groupSections';
+import { groupSections } from './groupSections';
+import { renderPhrasingContent } from './renderPhrasingContent';
 
 import styles from '@san-siva/stylekit/styles/index.module.scss';
-
-import { renderPhrasingContent } from './renderPhrasingContent';
-import { groupSections } from './groupSections';
-import type { Section } from './groupSections';
 
 function renderNode(
 	node: RootContent,

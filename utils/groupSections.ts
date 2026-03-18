@@ -29,10 +29,14 @@ export const groupSections = (nodes: RootContent[]): GroupedSections => {
 		if (node.type === 'heading') {
 			seenFirstHeading = true;
 
-			if (node.depth === 1) {
+			switch (node.depth) {
+			case 1: {
 				h1 = extractText(node.children);
 				afterH1 = true;
-			} else if (node.depth === 2) {
+			
+			break;
+			}
+			case 2: {
 				currentSubsection = null;
 				currentSection = {
 					title: extractText(node.children),
@@ -41,13 +45,20 @@ export const groupSections = (nodes: RootContent[]): GroupedSections => {
 				};
 				sections.push(currentSection);
 				afterH1 = false;
-			} else if (node.depth === 3) {
+			
+			break;
+			}
+			case 3: {
 				currentSubsection = {
 					title: extractText(node.children),
 					nodes: [],
 					subsections: [],
 				};
 				currentSection?.subsections.push(currentSubsection);
+			
+			break;
+			}
+			// No default
 			}
 		} else if (!seenFirstHeading) {
 			beforeFirstHeading.push(node);
