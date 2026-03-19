@@ -241,7 +241,7 @@ The prefix character is stripped from the rendered output — only the callout s
 
 ## License
 
-`blogkit-md` is open source software licensed under the [MIT license](https://github.com/san-siva/blogkit-md/blob/main/LICENSE).
+`blogkit-md` is open source software licensed under the [MIT license](https://github.com/san-siva/blogkit-md/blob/main/LICENSE).  
 Contributions are welcome!
 
 ## About
