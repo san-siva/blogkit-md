@@ -1,6 +1,12 @@
 import React from 'react';
 
-import { BlogSection, Callout, CodeBlock, Mermaid, Table } from '@san-siva/blogkit';
+import {
+	BlogSection,
+	Callout,
+	CodeBlock,
+	Mermaid,
+	Table,
+} from '@san-siva/blogkit';
 import type { Root, RootContent } from 'mdast';
 
 import type { Section } from './groupSections';
@@ -84,10 +90,47 @@ function renderNode(
 		}
 		case 'blockquote': {
 			const children = node.children as RootContent[];
+			let calloutType: 'info' | 'warning' | 'error' = 'info';
+			let strippedChildren = children;
+
+			const firstChild = children[0];
+			if (firstChild?.type === 'paragraph') {
+				const firstInline = firstChild.children[0];
+				if (firstInline?.type === 'text') {
+					if (firstInline.value.startsWith('!')) {
+						calloutType = 'error';
+						const trimmed = firstInline.value.slice(1).trimStart();
+						strippedChildren = [
+							{
+								...firstChild,
+								children: [
+									{ ...firstInline, value: trimmed },
+									...firstChild.children.slice(1),
+								],
+							},
+							...children.slice(1),
+						];
+					} else if (firstInline.value.startsWith('~')) {
+						calloutType = 'warning';
+						const trimmed = firstInline.value.slice(1).trimStart();
+						strippedChildren = [
+							{
+								...firstChild,
+								children: [
+									{ ...firstInline, value: trimmed },
+									...firstChild.children.slice(1),
+								],
+							},
+							...children.slice(1),
+						];
+					}
+				}
+			}
+
 			return (
-				<Callout key={key} type="info" hasMarginUp hasMarginDown>
-					{children.map((child, index) =>
-						renderNode(child, index, children[index + 1])
+				<Callout key={key} type={calloutType} hasMarginUp hasMarginDown>
+					{strippedChildren.map((child, index) =>
+						renderNode(child, index, strippedChildren[index + 1])
 					)}
 				</Callout>
 			);
@@ -95,7 +138,7 @@ function renderNode(
 		case 'list': {
 			const Tag = node.ordered ? 'ol' : 'ul';
 			return (
-				<Tag key={key}>
+				<Tag key={key} className={styles['margin-bottom--2']}>
 					{node.children.map((item, index) => (
 						<li key={index}>
 							{item.children.map((child, index) =>

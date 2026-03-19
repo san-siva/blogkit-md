@@ -89,23 +89,25 @@ export default function Page() {
 
 ## Supported markdown features
 
-| Feature         | Syntax                             |
-| --------------- | ---------------------------------- |
-| Headings        | `# H1` `## H2` `### H3` `#### H4`  |
-| Paragraph       | Plain text                         |
-| Hard line break | Two spaces at end of line          |
-| Bold            | `**bold**`                         |
-| Italic          | `_italic_`                         |
-| Inline code     | `` `code` ``                       |
-| Link            | `[text](url)`                      |
-| Image           | `![alt](url)`                      |
-| Ordered list    | `1. item`                          |
-| Unordered list  | `- item`                           |
-| Table           | GFM table syntax                   |
-| Code block      | ` ```lang `                        |
-| Mermaid diagram | ` ```mermaid `                     |
-| Thematic break  | `---`                              |
-| Blockquote      | `> text` — renders as info callout |
+| Feature              | Syntax                                 |
+| -------------------- | -------------------------------------- |
+| Headings             | `# H1` `## H2` `### H3` `#### H4`      |
+| Paragraph            | Plain text                             |
+| Hard line break      | Two spaces at end of line              |
+| Bold                 | `**bold**`                             |
+| Italic               | `_italic_`                             |
+| Inline code          | `` `code` ``                           |
+| Link                 | `[text](url)`                          |
+| Image                | `![alt](url)`                          |
+| Ordered list         | `1. item`                              |
+| Unordered list       | `- item`                               |
+| Table                | GFM table syntax                       |
+| Code block           | ` ```lang `                            |
+| Mermaid diagram      | ` ```mermaid `                         |
+| Thematic break       | `---`                                  |
+| Blockquote           | `> text` — renders as info callout     |
+| Blockquote (warning) | `> ~text` — renders as warning callout |
+| Blockquote (error)   | `> !text` — renders as error callout   |
 
 ## Philosophy
 
@@ -220,6 +222,18 @@ Nested content belongs here.
 ```markdown
 ## The Results
 ```
+
+### Callouts
+
+Blockquotes are rendered as styled callout banners. The callout type is controlled by a prefix on the first word of the quote:
+
+| Syntax    | Callout Type | Example                      |
+| :-------- | :----------- | :--------------------------- |
+| `> text`  | Info         | `> This is an info callout.` |
+| `> ~text` | Warning      | `> ~This is a warning.`      |
+| `> !text` | Error        | `> !This is an error.`       |
+
+The prefix character is stripped from the rendered output — only the callout style changes.
 
 ## Want more customization?
 
