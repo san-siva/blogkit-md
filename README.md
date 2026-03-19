@@ -2,7 +2,7 @@
 
 A Next.js tool that converts standard markdown files into rendered blog posts for [`@san-siva/blogkit`](https://blogkit.santhoshsiva.dev).
 
-> Note: [This](https://blogkit-md.santhoshsiva.dev) blog post is translated from the `README.md` file in the [`blogkit-md`](https://github.com/san-siva/blogkit-md) repository.
+> This README is automatically rendered as a live demo at [blogkit-md.santhoshsiva.dev](https://blogkit-md.santhoshsiva.dev)
 
 ## Getting started
 
