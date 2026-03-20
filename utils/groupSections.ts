@@ -65,13 +65,13 @@ export const groupSections = (nodes: RootContent[]): GroupedSections => {
 					break;
 				}
 				case 3: {
-					if (seenH4InCurrentSection) {
+					if (seenH4InCurrentSection || !currentSection) {
 						currentSubsection = null;
 						seenH4InCurrentSection = false;
 						currentSection = addSection(extractText(node.children), sections);
 					} else {
 						currentSubsection = makeSection(extractText(node.children));
-						currentSection?.subsections.push(currentSubsection);
+						currentSection.subsections.push(currentSubsection);
 					}
 					break;
 				}
