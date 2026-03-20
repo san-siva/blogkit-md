@@ -37,7 +37,7 @@ export const readMarkdownFile = async (
 		return { success: false, error: `File "${filePath}" is empty.` };
 	}
 
-	const ast = parseMarkdown(content);
+	const { ast } = parseMarkdown(content);
 	const rendered = renderMarkdownAst(ast);
 
 	return { success: true, rendered };
