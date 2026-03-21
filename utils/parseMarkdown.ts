@@ -24,8 +24,9 @@ export const parseMarkdown = (content: string): ParseResult => {
 	if (ast.children[0]?.type === 'yaml') {
 		const raw = (ast.children[0] as Yaml).value;
 		const parsed = parseYaml(raw) as Record<string, unknown>;
+		const title = parsed.title ?? parsed.name;
 		frontmatter = {
-			title: typeof parsed.title === 'string' ? parsed.title : undefined,
+			title: typeof title === 'string' ? title : undefined,
 			description: typeof parsed.description === 'string' ? parsed.description : undefined,
 		};
 		ast.children.shift();
