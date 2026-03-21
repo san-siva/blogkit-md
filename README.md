@@ -123,7 +123,7 @@ description: A short description shown below the title
 | Image                | `![alt](url)`                                  |
 | Ordered list         | `1. item`                                      |
 | Unordered list       | `- item`                                       |
-| Table                | GFM table syntax                               |
+| Table                | `\| col \| col \|` — headers and rows only     |
 | Code block           | ` ```lang `                                    |
 | Mermaid diagram      | ` ```mermaid `                                 |
 | Thematic break       | `---`                                          |
@@ -259,13 +259,13 @@ Result content.
 
 ### Callouts
 
-Blockquotes are rendered as styled callout banners. The callout type is controlled by a prefix on the first word of the quote:
+Blockquotes are rendered as styled callout banners. The callout type is controlled by a prefix on the first word of the quote.
 
-| Syntax    | Callout Type | Example                      |
-| :-------- | :----------- | :--------------------------- |
-| `> text`  | Info         | `> This is an info callout.` |
-| `> ~text` | Warning      | `> ~This is a warning.`      |
-| `> !text` | Error        | `> !This is an error.`       |
+> This is an info callout. Use `> text` for general information.
+
+> ~This is a warning callout. Use `> ~text` to flag caution.
+
+> !This is an error callout. Use `> !text` for errors or destructive actions.
 
 The prefix character is stripped from the rendered output — only the callout style changes.
 
