@@ -10,32 +10,14 @@ A Next.js tool that converts standard markdown files into rendered blog posts fo
 ## Getting started
 
 ```bash
-git clone https://github.com/san-siva/blogkit-md.git
-npm install
+npm install -g @san-siva/blogkit-md-cli
 ```
-
-### Dev server
 
 ```bash
-npm run dev                          # uses data/test.md by default
-npm run dev -- --file=data/my-post.md  # specify a markdown file
+blogkit-md my-post.md
 ```
 
-The dev server watches the markdown file for changes and auto-reloads the browser via HMR.
-
-### Build
-
-```bash
-npm run build
-npm run start
-```
-
-### Lint
-
-```bash
-npm run lint   # check
-npm run fix    # auto-fix
-```
+The browser opens automatically. The preview reloads whenever you save the file.
 
 ## Using BlogPost in your own Next.js app
 
