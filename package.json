@@ -1,6 +1,6 @@
 {
 	"name": "@san-siva/blogkit-md",
-	"version": "0.1.2",
+	"version": "0.2.0",
 	"description": "Converts markdown files into JSX blog posts for Blogkit",
 	"main": "index.ts",
 	"exports": {
