@@ -5,21 +5,9 @@ description: A React component library that converts markdown files into rendere
 
 A React component library that converts markdown files into rendered blog posts for [`@san-siva/blogkit`](https://blogkit.santhoshsiva.dev).
 
-> This README is automatically rendered as a live demo at [blogkit-md.santhoshsiva.dev](https://blogkit-md.santhoshsiva.dev)
+> Live preview of this README is available here [blogkit-md.santhoshsiva.dev](https://blogkit-md.santhoshsiva.dev)
 
 ## Getting started
-
-```bash
-npm install -g @san-siva/blogkit-md
-```
-
-```bash
-blogkit-md /path/to/readme.md
-```
-
-The browser opens automatically. The preview reloads whenever you save the file.
-
-## Using BlogPost in your own Next.js app
 
 `blogkit-md` exposes a `BlogPost` server component you can drop into any Next.js project.
 
@@ -27,20 +15,6 @@ The browser opens automatically. The preview reloads whenever you save the file.
 
 ```bash
 npm install @san-siva/blogkit-md
-```
-
-Or as a local package:
-
-```json
-"@san-siva/blogkit-md": "file:../blogkit-md"
-```
-
-Add it to `transpilePackages` in your `next.config.ts`:
-
-```ts
-const nextConfig = {
-	transpilePackages: ['@san-siva/stylekit'],
-};
 ```
 
 ### Usage
