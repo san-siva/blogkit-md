@@ -7,7 +7,7 @@ import type { RenderedMarkdown } from '../utils/renderMarkdown';
 import { renderMarkdownAst } from '../utils/renderMarkdown';
 
 type MarkdownFileResult =
-	| { success: true; rendered: RenderedMarkdown; frontmatter: Frontmatter }
+	| ({ success: true; rendered: RenderedMarkdown } & Frontmatter)
 	| { success: false; error: string };
 
 export const readMarkdownFile = async (
@@ -38,5 +38,5 @@ export const readMarkdownFile = async (
 	const { ast, frontmatter } = parseMarkdown(content);
 	const rendered = renderMarkdownAst(ast);
 
-	return { success: true, rendered, frontmatter };
+	return { success: true, rendered, ...frontmatter };
 };
