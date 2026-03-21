@@ -1,7 +1,6 @@
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 
-import '@/utils/devReloadTrigger';
 import type { Frontmatter } from '@/utils/parseMarkdown';
 import { parseMarkdown } from '@/utils/parseMarkdown';
 import type { RenderedMarkdown } from '@/utils/renderMarkdown';
@@ -15,14 +14,12 @@ export const readMarkdownFile = async (
 	filePath: string | undefined
 ): Promise<MarkdownFileResult> => {
 	if (!filePath) {
-		return {
-			success: false,
-			error:
-				'MARKDOWN_FILE env variable is required. Usage: MARKDOWN_FILE=data/test.md npm run dev',
-		};
+		return { success: false, error: 'No file path provided.' };
 	}
 
-	const absolutePath = path.join(process.cwd(), filePath);
+	const absolutePath = path.isAbsolute(filePath)
+		? filePath
+		: path.join(process.cwd(), filePath);
 
 	let content: string;
 	try {
