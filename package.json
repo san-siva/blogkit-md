@@ -2,11 +2,20 @@
 	"name": "@san-siva/blogkit-md",
 	"version": "0.2.2",
 	"description": "Converts markdown files into JSX blog posts for Blogkit",
-	"main": "index.ts",
+	"main": "./dist/index.js",
 	"exports": {
-		".": "./index.ts"
+		".": {
+			"import": "./dist/index.js",
+			"types": "./dist/index.d.ts"
+		}
 	},
+	"files": [
+		"dist",
+		"src"
+	],
 	"scripts": {
+		"build": "tsup",
+		"prepublishOnly": "npm ci && npm run lint && npm run test && npm run build",
 		"test": "vitest run",
 		"lint": "eslint . --config eslint.config.ts",
 		"fix": "eslint . --config eslint.config.ts --fix"
@@ -30,6 +39,7 @@
 		"@types/eslint": "^9.6.1",
 		"@types/eslint__js": "^9.14.0",
 		"@types/mdast": "^4.0.4",
+		"tsup": "^8.0.0",
 		"@types/node": "^22",
 		"@types/react": "^19",
 		"@types/react-dom": "^19",
