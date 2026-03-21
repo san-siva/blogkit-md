@@ -39,7 +39,7 @@ Add it to `transpilePackages` in your `next.config.ts`:
 
 ```ts
 const nextConfig = {
-	transpilePackages: ['@san-siva/blogkit-md'],
+	transpilePackages: ['@san-siva/stylekit'],
 };
 ```
 
