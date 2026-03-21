@@ -14,7 +14,7 @@ npm install -g @san-siva/blogkit-md-cli
 ```
 
 ```bash
-blogkit-md my-post.md
+blogkit-md /path/to/readme.md
 ```
 
 The browser opens automatically. The preview reloads whenever you save the file.
