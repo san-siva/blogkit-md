@@ -14,11 +14,16 @@ const Page = async () => {
 		);
 	}
 
-	const { rendered } = result;
+	const { rendered, frontmatter } = result;
 
 	return (
 		<Blog>
-			{rendered.pageTitle && <BlogHeader title={[rendered.pageTitle]} desc={[]} />}
+			{frontmatter.title && (
+				<BlogHeader
+					title={[frontmatter.title]}
+					desc={frontmatter.description ? [frontmatter.description] : []}
+				/>
+			)}
 			<MarkdownSections rendered={rendered} />
 		</Blog>
 	);

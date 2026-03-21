@@ -41,14 +41,12 @@ const BlogPost = async ({ filePath, jsonLd }: BlogPostProperties) => {
 	const { ast, frontmatter } = parseMarkdown(content);
 	const rendered = renderMarkdownAst(ast);
 
-	const title = frontmatter.title ?? rendered.pageTitle;
+	const title = frontmatter.title;
 	const desc = frontmatter.description;
 
 	return (
 		<Blog jsonLd={jsonLd}>
-			{title && (
-				<BlogHeader title={[title]} desc={desc ? [desc] : []} />
-			)}
+			{title && <BlogHeader title={[title]} desc={desc ? [desc] : []} />}
 			<MarkdownSections rendered={rendered} />
 		</Blog>
 	);

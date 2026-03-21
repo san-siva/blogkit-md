@@ -159,9 +159,9 @@ function renderNodes(nodes: RootContent[]): React.ReactNode[] {
 	return nodes.map((node, index) => renderNode(node, index, nodes[index + 1]));
 }
 
-function renderSection(section: Section, key: number): React.ReactNode {
+function renderSection(section: Section, key = -1): React.ReactNode {
 	return (
-		<BlogSection key={key} title={section.title}>
+		<BlogSection key={key} title={section?.title ?? ''}>
 			{renderNodes(section.nodes)}
 			{section.subsections.map((subsection, index) =>
 				renderSection(subsection, index)
@@ -171,21 +171,13 @@ function renderSection(section: Section, key: number): React.ReactNode {
 }
 
 export type RenderedMarkdown = {
-	pageTitle: string | null;
-	beforeFirstHeading: React.ReactNode[];
-	textBeforeFirstSection: React.ReactNode[];
 	sections: React.ReactNode[];
 };
 
 export const renderMarkdownAst = (ast: Root): RenderedMarkdown => {
-	const { pageTitle, beforeFirstHeading, textBeforeFirstSection, sections } =
-		groupSections(ast.children);
-
+	const grouped = groupSections(ast.children);
 	return {
-		pageTitle,
-		beforeFirstHeading: renderNodes(beforeFirstHeading),
-		textBeforeFirstSection: renderNodes(textBeforeFirstSection),
-		sections: sections.map((section, index) => renderSection(section, index)),
+		sections: grouped.map((section, index) => renderSection(section, index)),
 	};
 };
 
@@ -193,14 +185,4 @@ export const MarkdownSections = ({
 	rendered,
 }: {
 	rendered: RenderedMarkdown;
-}): React.ReactNode => (
-	<>
-		{rendered.beforeFirstHeading.length > 0 && (
-			<BlogSection>{rendered.beforeFirstHeading}</BlogSection>
-		)}
-		{rendered.textBeforeFirstSection.length > 0 && (
-			<BlogSection>{rendered.textBeforeFirstSection}</BlogSection>
-		)}
-		{rendered.sections}
-	</>
-);
+}): React.ReactNode => <>{rendered.sections}</>;

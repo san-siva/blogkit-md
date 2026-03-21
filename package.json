@@ -10,6 +10,7 @@
 		"dev": "tsx scripts/dev.ts",
 		"build": "MARKDOWN_FILE=data/test.md next build",
 		"start": "next start",
+		"test": "vitest run",
 		"lint": "eslint . --config eslint.config.ts",
 		"fix": "eslint . --config eslint.config.ts --fix"
 	},
@@ -51,6 +52,7 @@
 		"prettier": "^3.0.0",
 		"tsx": "^4.0.0",
 		"typescript": "^5.0.0",
-		"typescript-eslint": "^8.0.0"
+		"typescript-eslint": "^8.0.0",
+		"vitest": "^4.1.0"
 	}
 }

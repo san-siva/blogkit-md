@@ -2,12 +2,13 @@ import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 
 import '@/utils/devReloadTrigger';
+import type { Frontmatter } from '@/utils/parseMarkdown';
 import { parseMarkdown } from '@/utils/parseMarkdown';
 import type { RenderedMarkdown } from '@/utils/renderMarkdown';
 import { renderMarkdownAst } from '@/utils/renderMarkdown';
 
 type MarkdownFileResult =
-	| { success: true; rendered: RenderedMarkdown }
+	| { success: true; rendered: RenderedMarkdown; frontmatter: Frontmatter }
 	| { success: false; error: string };
 
 export const readMarkdownFile = async (
@@ -37,8 +38,8 @@ export const readMarkdownFile = async (
 		return { success: false, error: `File "${filePath}" is empty.` };
 	}
 
-	const { ast } = parseMarkdown(content);
+	const { ast, frontmatter } = parseMarkdown(content);
 	const rendered = renderMarkdownAst(ast);
 
-	return { success: true, rendered };
+	return { success: true, rendered, frontmatter };
 };

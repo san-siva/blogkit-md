@@ -1,4 +1,7 @@
-# blogkit-md
+---
+title: blogkit-md
+description: A Next.js tool that converts standard markdown files into rendered blog posts for `@san-siva/blogkit`.
+---
 
 A Next.js tool that converts standard markdown files into rendered blog posts for [`@san-siva/blogkit`](https://blogkit.santhoshsiva.dev).
 
@@ -87,27 +90,46 @@ export default function Page() {
 | `filePath` | `string`             |   Yes    | Path to the markdown file. Relative paths are resolved from `process.cwd()`. |
 | `jsonLd`   | `WithContext<Thing>` |    No    | Optional JSON-LD schema passed to `<Blog>` for structured data / SEO.        |
 
+### Frontmatter
+
+Set the page title and description via a YAML frontmatter block at the top of your markdown file:
+
+```yaml
+---
+title: My Post Title
+description: A short description shown below the title
+---
+```
+
+| Field         | Description                             |
+| :------------ | :-------------------------------------- |
+| `title`       | Renders as the `BlogHeader` page title  |
+| `description` | Renders as the `BlogHeader` description |
+
 ## Supported markdown features
 
-| Feature              | Syntax                                 |
-| -------------------- | -------------------------------------- |
-| Headings             | `# H1` `## H2` `### H3` `#### H4`      |
-| Paragraph            | Plain text                             |
-| Hard line break      | Two spaces at end of line              |
-| Bold                 | `**bold**`                             |
-| Italic               | `_italic_`                             |
-| Inline code          | `` `code` ``                           |
-| Link                 | `[text](url)`                          |
-| Image                | `![alt](url)`                          |
-| Ordered list         | `1. item`                              |
-| Unordered list       | `- item`                               |
-| Table                | GFM table syntax                       |
-| Code block           | ` ```lang `                            |
-| Mermaid diagram      | ` ```mermaid `                         |
-| Thematic break       | `---`                                  |
-| Blockquote           | `> text` — renders as info callout     |
-| Blockquote (warning) | `> ~text` — renders as warning callout |
-| Blockquote (error)   | `> !text` — renders as error callout   |
+| Feature              | Syntax                                         |
+| -------------------- | ---------------------------------------------- |
+| Frontmatter          | `---` YAML block — sets `title`, `description` |
+| Section title        | `# H1` `## H2` — top-level section             |
+| Subsection title     | `### H3` — nested section                      |
+| Bold line            | `#### H4` `##### H5` `###### H6`               |
+| Paragraph            | Plain text                                     |
+| Hard line break      | Two spaces at end of line                      |
+| Bold                 | `**bold**`                                     |
+| Italic               | `_italic_`                                     |
+| Inline code          | `` `code` ``                                   |
+| Link                 | `[text](url)`                                  |
+| Image                | `![alt](url)`                                  |
+| Ordered list         | `1. item`                                      |
+| Unordered list       | `- item`                                       |
+| Table                | GFM table syntax                               |
+| Code block           | ` ```lang `                                    |
+| Mermaid diagram      | ` ```mermaid `                                 |
+| Thematic break       | `---`                                          |
+| Blockquote           | `> text` — renders as info callout             |
+| Blockquote (warning) | `> ~text` — renders as warning callout         |
+| Blockquote (error)   | `> !text` — renders as error callout           |
 
 ## Philosophy
 
@@ -143,37 +165,29 @@ flowchart LR
 
 ### Headings as Layout Triggers
 
-In `blogkit-md`, headings aren't just for changing font sizes—**they are the architectural blueprint for your post**. Each heading level acts as a layout trigger, directly controlling how `BlogSection` components are generated, nested, or promoted.
+In `blogkit-md`, headings aren't just for changing font sizes — **they are the architectural blueprint for your post**.
 
-| Markdown                 | Layout Behavior                                                                                                                                            |
-| :----------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `# H1`                   | **Page Title.** Sets the main article title. Does not generate a structural section block.                                                                 |
-| `## H2`                  | **Main Section.** Creates a new, top-level `BlogSection`.                                                                                                  |
-| `### H3`                 | **Subsection.** Nests cleanly within the currently active `H2` section.                                                                                    |
-| `#### H4`                | **Section Break.** Renders as a bold line, but acts as a layout trigger: it forces the _next_ `H3` to break out and become a brand-new, top-level section. |
-| `##### H5` & `###### H6` | **Inline Emphasis.** Renders as a bold line within the current section or subsection without altering the page layout.                                     |
+| Markdown                         | Layout Behavior                                                                                              |
+| :------------------------------- | :----------------------------------------------------------------------------------------------------------- |
+| `# H1` & `## H2`                 | **Top-level section.** Creates a new `BlogSection`.                                                          |
+| `### H3`                         | **Subsection.** Nests within the active H1/H2 section. Becomes top-level if no parent exists or after an H4. |
+| `#### H4` `##### H5` `###### H6` | **Bold line.** Rendered as styled text inside the current section — no layout block is created.              |
 
-> Standard content—such as paragraphs, lists, and code blocks—automatically flows into the most recently opened section or subsection.
+> Standard content — paragraphs, lists, code blocks — flows into the most recently opened section or subsection.
 
 ### Special Layout Rules
 
-Because `blogkit-md` is optimized for blog readability, it includes smart fallbacks to ensure your layout looks great even in edge cases:
-
-| Rule                                                 | Behavior                                                                                                                                                                                                              |
-| ---------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Strictly Deepening Hierarchy                         | Headings within a section must always go deeper (e.g., `H2 → H3 → H4`). If the hierarchy reverses—like an `H3` appearing after an `H4`—the nesting breaks, and the `H3` is promoted to a brand-new top-level section. |
-| `H1` loses structural significance if not at the top | If an `H1` appears anywhere other than the very top of the document, it does not create a page title. Instead, it is treated as stylized text and rendered as a section break.                                        |
-| Intro section                                        | Any text written before the first heading—or directly beneath the `# H1` page title—is automatically grouped into an untitled, top-level BlogSection                                                                  |
+| Rule                | Behavior                                                                                                                  |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| H4 as section break | An H4 acts as a layout trigger: the _next_ H3 after it breaks out and becomes a new top-level section instead of nesting. |
+| H3 without a parent | If an H3 appears before any H1/H2, it is promoted to a top-level section.                                                 |
+| Intro section       | Any content before the first heading is grouped into an untitled top-level `BlogSection`.                                 |
 
 ### Visualizing the Structure
 
-Let's put those layout rules into practice. Here is how a standard markdown document translates into a blog layout:
+Here is how a standard markdown document maps to blog layout:
 
 ```markdown
-# My Awesome Blog Post
-
-This text becomes the Preamble (an untitled, top-level section).
-
 ## The Setup
 
 Some content goes here.
@@ -204,7 +218,7 @@ This text becomes an introductory, untitled section.
 
 Some content goes here.
 
-#### Prerequisites
+### Prerequisites
 
 Nested content belongs here.
 ```
