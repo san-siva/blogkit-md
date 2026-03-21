@@ -3,7 +3,8 @@ import { defineConfig } from 'tsup';
 export default defineConfig({
 	entry: ['src/index.ts'],
 	format: ['esm'],
-	dts: { tsconfig: './tsconfig.build.json' },
+	tsconfig: 'tsconfig.build.json',
+	dts: true,
 	clean: true,
 	external: ['react', 'react-dom', 'next', '@san-siva/blogkit', '@san-siva/stylekit'],
 });
