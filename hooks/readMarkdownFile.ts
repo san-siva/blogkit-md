@@ -1,10 +1,10 @@
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 
-import type { Frontmatter } from '@/utils/parseMarkdown';
-import { parseMarkdown } from '@/utils/parseMarkdown';
-import type { RenderedMarkdown } from '@/utils/renderMarkdown';
-import { renderMarkdownAst } from '@/utils/renderMarkdown';
+import type { Frontmatter } from '../utils/parseMarkdown';
+import { parseMarkdown } from '../utils/parseMarkdown';
+import type { RenderedMarkdown } from '../utils/renderMarkdown';
+import { renderMarkdownAst } from '../utils/renderMarkdown';
 
 type MarkdownFileResult =
 	| { success: true; rendered: RenderedMarkdown; frontmatter: Frontmatter }
