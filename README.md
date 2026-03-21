@@ -1,16 +1,16 @@
 ---
 title: blogkit-md
-description: A Next.js tool that converts standard markdown files into rendered blog posts for `@san-siva/blogkit`.
+description: A React component library that converts markdown files into rendered blog posts for `@san-siva/blogkit`.
 ---
 
-A Next.js tool that converts standard markdown files into rendered blog posts for [`@san-siva/blogkit`](https://blogkit.santhoshsiva.dev).
+A React component library that converts markdown files into rendered blog posts for [`@san-siva/blogkit`](https://blogkit.santhoshsiva.dev).
 
 > This README is automatically rendered as a live demo at [blogkit-md.santhoshsiva.dev](https://blogkit-md.santhoshsiva.dev)
 
 ## Getting started
 
 ```bash
-npm install -g @san-siva/blogkit-md-cli
+npm install -g @san-siva/blogkit-md
 ```
 
 ```bash
