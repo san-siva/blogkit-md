@@ -167,27 +167,29 @@ flowchart LR
 
 In `blogkit-md`, headings aren't just for changing font sizes — **they are the architectural blueprint for your post**.
 
-| Markdown                         | Layout Behavior                                                                                              |
-| :------------------------------- | :----------------------------------------------------------------------------------------------------------- |
-| `# H1` & `## H2`                 | **Top-level section.** Creates a new `BlogSection`.                                                          |
-| `### H3`                         | **Subsection.** Nests within the active H1/H2 section. Becomes top-level if no parent exists or after an H4. |
-| `#### H4` `##### H5` `###### H6` | **Bold line.** Rendered as styled text inside the current section — no layout block is created.              |
+| Markdown                         | Layout Behavior                                                                              |
+| :------------------------------- | :------------------------------------------------------------------------------------------- |
+| `# H1` & `## H2`                 | **Top-level section.** Creates a new `BlogSection`.                                          |
+| `### H3`                         | **Subsection.** Nests within the active H1/H2 section. Promoted to top-level if none exists. |
+| `#### H4` `##### H5` `###### H6` | **Bold line.** Rendered as styled text inside the current section — no layout effect.        |
 
 > Standard content — paragraphs, lists, code blocks — flows into the most recently opened section or subsection.
 
-### Special Layout Rules
+### The Nesting Logic
 
-| Rule                | Behavior                                                                                                                  |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------- |
-| H4 as section break | An H4 acts as a layout trigger: the _next_ H3 after it breaks out and becomes a new top-level section instead of nesting. |
-| H3 without a parent | If an H3 appears before any H1/H2, it is promoted to a top-level section.                                                 |
-| Intro section       | Any content before the first heading is grouped into an untitled top-level `BlogSection`.                                 |
+The layout is determined entirely by heading level (depth):
+
+- **Deeper heading (level up):** If a heading has a higher number than the current one (e.g. `### H3` after `## H2`), it creates a nested subsection inside the current section.
+- **Equal or shallower heading (level down):** If a heading has a number equal to or lower than the current one (e.g. `## H2` after another `## H2`), it closes the current section and starts a new one at the appropriate level.
+- **Initial content:** Any content before the very first heading is grouped into an automatic untitled intro section.
 
 ### Visualizing the Structure
 
 Here is how a standard markdown document maps to blog layout:
 
 ```markdown
+Intro content
+
 ## The Setup
 
 Some content goes here.
@@ -198,9 +200,17 @@ Nested content belongs here.
 
 ## The Execution
 
-#### Note on performance:
+Some more content.
 
 ### The Results
+
+Result content.
+
+# A Note
+
+### A Subsection
+
+## Also Nested
 ```
 
 Here is how the parser breaks the above document down into isolated React components:
@@ -208,7 +218,7 @@ Here is how the parser breaks the above document down into isolated React compon
 ##### Intro section
 
 ```markdown
-This text becomes an introductory, untitled section.
+Intro content
 ```
 
 ##### Section 1
@@ -228,14 +238,24 @@ Nested content belongs here.
 ```markdown
 ## The Execution
 
-#### Note on performance:
+Some more content.
+
+### The Results
+
+Result content.
 ```
 
 ##### Section 3
 
 ```markdown
-## The Results
+# A Note
+
+### A Subsection
+
+## Also Nested
 ```
+
+> `## Also Nested` does not start a new top-level section. Because it appears after a `### H3` inside an `# H1`, the parser backtracks to the H1 and nests the H2 beneath it.
 
 ### Callouts
 
@@ -253,12 +273,12 @@ The prefix character is stripped from the rendered output — only the callout s
 
 `blogkit-md` is just one piece of the puzzle. If you want to customize the underlying React components, tweak the UI, or take full control over your blog's layout, dive into the official [Blogkit documentation](https://blogkit.santhoshsiva.dev/).
 
-## License
+### License
 
 `blogkit-md` is open source software licensed under the [MIT license](https://github.com/san-siva/blogkit-md/blob/main/LICENSE).  
 Contributions are welcome!
 
-## About
+### About
 
 - **Author:** [Santhosh Siva](https://www.santhoshsiva.dev)
 - **License:** [MIT](https://github.com/san-siva/blogkit-md/blob/main/LICENSE)

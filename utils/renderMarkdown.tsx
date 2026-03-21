@@ -15,21 +15,34 @@ import { renderPhrasingContent } from './renderPhrasingContent';
 
 import styles from '@san-siva/stylekit/styles/index.module.scss';
 
-function renderNode(
-	node: RootContent,
-	key: number,
-	nextNode?: RootContent,
-	inList = false
-): React.ReactNode {
+function renderNode({
+	node,
+	key,
+	nextNode,
+	inList = false,
+	inCallout = false,
+}: {
+	node: RootContent;
+	key: number;
+	nextNode?: RootContent;
+	inList?: boolean;
+	inCallout?: boolean;
+}): React.ReactNode {
 	switch (node.type) {
 		case 'paragraph': {
 			if (inList) {
 				return <p key={key}>{renderPhrasingContent(node.children)}</p>;
 			}
-			const marginClass =
-				nextNode?.type === 'paragraph'
-					? styles['margin-bottom--1']
+
+			const isFollowedByParagraph = nextNode?.type === 'paragraph';
+			const isLastInCallout = !nextNode && inCallout;
+
+			const marginClass = isFollowedByParagraph
+				? styles['margin-bottom--1']
+				: isLastInCallout
+					? undefined
 					: styles['margin-bottom--2'];
+
 			return (
 				<p key={key} className={marginClass}>
 					{renderPhrasingContent(node.children)}
@@ -130,7 +143,12 @@ function renderNode(
 			return (
 				<Callout key={key} type={calloutType} hasMarginUp hasMarginDown>
 					{strippedChildren.map((child, index) =>
-						renderNode(child, index, strippedChildren[index + 1])
+						renderNode({
+							node: child,
+							key: index,
+							nextNode: strippedChildren[index + 1],
+							inCallout: true,
+						})
 					)}
 				</Callout>
 			);
@@ -142,7 +160,11 @@ function renderNode(
 					{node.children.map((item, index) => (
 						<li key={index}>
 							{item.children.map((child, index) =>
-								renderNode(child as RootContent, index, undefined, true)
+								renderNode({
+									node: child as RootContent,
+									key: index,
+									inList: true,
+								})
 							)}
 						</li>
 					))}
@@ -156,7 +178,9 @@ function renderNode(
 }
 
 function renderNodes(nodes: RootContent[]): React.ReactNode[] {
-	return nodes.map((node, index) => renderNode(node, index, nodes[index + 1]));
+	return nodes.map((node, index) =>
+		renderNode({ node, key: index, nextNode: nodes[index + 1] })
+	);
 }
 
 function renderSection(section: Section, key = -1): React.ReactNode {
