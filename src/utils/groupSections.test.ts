@@ -59,6 +59,27 @@ describe('groupSections', () => {
 		});
 	});
 
+	describe('content before a deeper heading', () => {
+		it('moves content preceding a subsection into its own untitled subsection', () => {
+			const result = sections('## Parent\n\nsome text\n\n### Child');
+			expect(result).toHaveLength(1);
+			expect(result[0].title).toBe('Parent');
+			expect(result[0].nodes).toHaveLength(0);
+			expect(result[0].subsections).toHaveLength(2);
+			expect(result[0].subsections[0].title).toBe('');
+			expect(result[0].subsections[0].nodes).toHaveLength(1);
+			expect(result[0].subsections[1].title).toBe('Child');
+		});
+
+		it('skips the untitled subsection when no content precedes the deeper heading', () => {
+			const result = sections('## Parent\n\n### Child');
+			expect(result).toHaveLength(1);
+			expect(result[0].title).toBe('Parent');
+			expect(result[0].subsections).toHaveLength(1);
+			expect(result[0].subsections[0].title).toBe('Child');
+		});
+	});
+
 	describe('nested sections (H3)', () => {
 		it('nests H3 under a preceding H2', () => {
 			const result = sections('## Parent\n\n### Child');

@@ -30,6 +30,22 @@ const consumeNode = (
 	const headingLevel = node.depth;
 	const isIncrementingHeading = headingLevel > section.headingLevel;
 	if (isIncrementingHeading) {
+		// If a section has content nodes before a deeper heading, wrap those
+		// nodes in an untitled subsection so they aren't lost.
+		// e.g. ## Parent > "intro text" > ### Child
+		// becomes: Parent { subsections: [{ title: '', nodes: [...] }, Child] }
+		// instead of: Parent { nodes: [...], subsections: [Child] }
+		if (section.nodes.length > 0) {
+			const subSection: Section = {
+				title: '',
+				headingLevel: section.headingLevel,
+				nodes: section.nodes,
+				subsections: [],
+				previousSection: section,
+			};
+			section.subsections.push(subSection);
+			section.nodes = [];
+		}
 		const subsection: Section = {
 			title: extractText(node.children),
 			headingLevel,

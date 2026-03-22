@@ -10,14 +10,14 @@ export async function generateMetadata(): Promise<Metadata> {
 	const result = await readMarkdownFile(FILE_PATH);
 	if (!result.success) return {};
 
-	const { title = '', description = '' } = result.frontmatter;
+	const { title = '', description = '' } = result;
 	return buildPageMetadata(title, description, BLOGKIT_MD);
 }
 
 export default async function Home() {
 	const result = await readMarkdownFile(FILE_PATH);
-	const title = result.success ? (result.frontmatter.title ?? '') : '';
-	const description = result.success ? (result.frontmatter.description ?? '') : '';
+	const title = result.success ? (result.title ?? '') : '';
+	const description = result.success ? (result.description ?? '') : '';
 
 	return (
 		<BlogPost
