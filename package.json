@@ -22,7 +22,7 @@
 	},
 	"dependencies": {
 		"@san-siva/blogkit": "^1.1.21",
-		"@san-siva/stylekit": "^1.0.8",
+		"@san-siva/stylekit": "^1.0.11",
 		"next": "^16.0.10",
 		"react": "^19.0.0",
 		"react-dom": "^19.0.0",
