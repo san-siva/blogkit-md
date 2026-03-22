@@ -8,7 +8,7 @@
 		"start": "next start"
 	},
 	"dependencies": {
-		"@san-siva/blogkit": "^1.1.21",
+		"@san-siva/blogkit": "^1.1.22",
 		"@san-siva/blogkit-md": "file:..",
 		"@san-siva/stylekit": "^1.0.11",
 		"next": "^16.0.10",
