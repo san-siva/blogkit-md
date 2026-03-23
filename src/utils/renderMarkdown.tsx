@@ -3,6 +3,8 @@ import React from 'react';
 import {
 	BlogSection,
 	Callout,
+	CheckList,
+	type CheckListItem,
 	CodeBlock,
 	Mermaid,
 	Table,
@@ -15,18 +17,22 @@ import { renderPhrasingContent } from './renderPhrasingContent';
 
 import styles from '@san-siva/stylekit/styles/index.module.scss';
 
+type Counters = { mermaid: number };
+
 function renderNode({
 	node,
 	key,
 	nextNode,
 	inList = false,
 	inCallout = false,
+	counters,
 }: {
 	node: RootContent;
 	key: number;
 	nextNode?: RootContent;
 	inList?: boolean;
 	inCallout?: boolean;
+	counters: Counters;
 }): React.ReactNode {
 	switch (node.type) {
 		case 'paragraph': {
@@ -51,10 +57,11 @@ function renderNode({
 		}
 		case 'code': {
 			if (node.lang === 'mermaid') {
+				const mermaidId = counters.mermaid++;
 				return (
 					<Mermaid
 						key={key}
-						id={`mermaid-${key}`}
+						id={`mermaid-${mermaidId}`}
 						code={node.value}
 						hasMarginUp
 						hasMarginDown
@@ -148,12 +155,24 @@ function renderNode({
 							key: index,
 							nextNode: strippedChildren[index + 1],
 							inCallout: true,
+							counters,
 						})
 					)}
 				</Callout>
 			);
 		}
 		case 'list': {
+			const isTaskList = node.children.every(item => item.checked !== null && item.checked !== undefined);
+			if (isTaskList) {
+				const items: CheckListItem[] = node.children.map((item, index) => ({
+					id: String(index),
+					isChecked: item.checked === true,
+					children: item.children.map((child, childIndex) =>
+						renderNode({ node: child as RootContent, key: childIndex, inList: true, counters })
+					),
+				}));
+				return <CheckList key={key} items={items} hasMarginUp hasMarginDown />;
+			}
 			const Tag = node.ordered ? 'ol' : 'ul';
 			return (
 				<Tag key={key} className={styles['margin-bottom--2']}>
@@ -164,6 +183,7 @@ function renderNode({
 									node: child as RootContent,
 									key: index,
 									inList: true,
+									counters,
 								})
 							)}
 						</li>
@@ -177,18 +197,18 @@ function renderNode({
 	}
 }
 
-function renderNodes(nodes: RootContent[]): React.ReactNode[] {
+function renderNodes(nodes: RootContent[], counters: Counters): React.ReactNode[] {
 	return nodes.map((node, index) =>
-		renderNode({ node, key: index, nextNode: nodes[index + 1] })
+		renderNode({ node, key: index, nextNode: nodes[index + 1], counters })
 	);
 }
 
-function renderSection(section: Section, key = -1): React.ReactNode {
+function renderSection(section: Section, counters: Counters, key = -1): React.ReactNode {
 	return (
 		<BlogSection key={key} title={section?.title ?? ''}>
-			{renderNodes(section.nodes)}
+			{renderNodes(section.nodes, counters)}
 			{section.subsections.map((subsection, index) =>
-				renderSection(subsection, index)
+				renderSection(subsection, counters, index)
 			)}
 		</BlogSection>
 	);
@@ -199,9 +219,10 @@ export type RenderedMarkdown = {
 };
 
 export const renderMarkdownAst = (ast: Root): RenderedMarkdown => {
+	const counters: Counters = { mermaid: 0 };
 	const grouped = groupSections(ast.children);
 	return {
-		sections: grouped.map((section, index) => renderSection(section, index)),
+		sections: grouped.map((section, index) => renderSection(section, counters, index)),
 	};
 };
 
