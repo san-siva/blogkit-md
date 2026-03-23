@@ -1,9 +1,15 @@
 import { describe, expect, it } from 'vitest';
+import remarkGfm from 'remark-gfm';
+import remarkParse from 'remark-parse';
+import { unified } from 'unified';
+import type { Root } from 'mdast';
 
-import { parseMarkdown } from './parseMarkdown';
 import { groupSections } from './groupSections';
 
-const sections = (md: string) => groupSections(parseMarkdown(md).ast.children);
+const sections = (md: string) => {
+	const ast = unified().use(remarkParse).use(remarkGfm).parse(md) as Root;
+	return groupSections(ast.children);
+};
 
 describe('groupSections', () => {
 	describe('empty input', () => {

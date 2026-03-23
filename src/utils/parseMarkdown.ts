@@ -17,6 +17,17 @@ export type ParseResult = {
 	frontmatter: Frontmatter;
 };
 
+// When a document has no frontmatter title, treat a leading H1 as the page title
+// and remove it from the AST so it isn't also rendered as a section.
+const consumeH1Title = (ast: Root, frontmatter: Frontmatter): Frontmatter => {
+	if (!frontmatter.title && ast.children[0]?.type === 'heading' && (ast.children[0] as Heading).depth === 1) {
+		const title = extractText((ast.children[0] as Heading).children);
+		ast.children.shift();
+		return { ...frontmatter, title };
+	}
+	return frontmatter;
+};
+
 export const parseMarkdown = (content: string): ParseResult => {
 	const processor = unified().use(remarkParse).use(remarkGfm).use(remarkFrontmatter, ['yaml']);
 	const ast = processor.parse(content) as Root;
@@ -34,10 +45,7 @@ export const parseMarkdown = (content: string): ParseResult => {
 		ast.children.shift();
 	}
 
-	if (!frontmatter.title && ast.children[0]?.type === 'heading' && (ast.children[0] as Heading).depth === 1) {
-		frontmatter = { ...frontmatter, title: extractText((ast.children[0] as Heading).children) };
-		ast.children.shift();
-	}
+	frontmatter = consumeH1Title(ast, frontmatter);
 
 	return { ast, frontmatter };
 };
