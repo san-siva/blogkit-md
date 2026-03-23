@@ -122,32 +122,6 @@ function renderNode({
 						const alertType = githubAlertMatch[1].toUpperCase();
 						calloutType = alertType === 'WARNING' ? 'warning' : alertType === 'CAUTION' ? 'error' : 'info';
 						strippedChildren = children.slice(1);
-					} else if (firstInline.value.startsWith('!')) {
-						calloutType = 'error';
-						const trimmed = firstInline.value.slice(1).trimStart();
-						strippedChildren = [
-							{
-								...firstChild,
-								children: [
-									{ ...firstInline, value: trimmed },
-									...firstChild.children.slice(1),
-								],
-							},
-							...children.slice(1),
-						];
-					} else if (firstInline.value.startsWith('~')) {
-						calloutType = 'warning';
-						const trimmed = firstInline.value.slice(1).trimStart();
-						strippedChildren = [
-							{
-								...firstChild,
-								children: [
-									{ ...firstInline, value: trimmed },
-									...firstChild.children.slice(1),
-								],
-							},
-							...children.slice(1),
-						];
 					}
 				}
 			}

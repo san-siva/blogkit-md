@@ -79,13 +79,12 @@ description: A short description shown below the title
 | Image                | `![alt](url)`                                  |
 | Ordered list         | `1. item`                                      |
 | Unordered list       | `- item`                                       |
+| Task list            | `- [ ] item` / `- [x] item`                    |
 | Table                | `\| col \| col \|` — headers and rows only     |
 | Code block           | ` ```lang `                                    |
 | Mermaid diagram      | ` ```mermaid `                                 |
 | Thematic break       | `---`                                          |
-| Blockquote           | `> text` — renders as info callout             |
-| Blockquote (warning) | `> ~text` — renders as warning callout         |
-| Blockquote (error)   | `> !text` — renders as error callout           |
+| Blockquote / Callout | `> text` or `> [!TYPE]` — renders as callout   |
 
 ## Philosophy
 
@@ -215,15 +214,23 @@ Result content.
 
 ### Callouts
 
-Blockquotes are rendered as styled callout banners. The callout type is controlled by a prefix on the first word of the quote.
+Blockquotes are rendered as styled callout banners. Plain blockquotes render as info callouts. Use GitHub-style alert syntax to control the type:
 
-> This is an info callout. Use `> text` for general information.
+| Syntax         | Callout type |
+| :------------- | :----------- |
+| `[!NOTE]`      | info         |
+| `[!TIP]`       | info         |
+| `[!IMPORTANT]` | info         |
+| `[!WARNING]`   | warning      |
+| `[!CAUTION]`   | error        |
 
-> ~This is a warning callout. Use `> ~text` to flag caution.
+```markdown
+> [!WARNING]
+>
+> Do not clone this repository into system folders.
+```
 
-> !This is an error callout. Use `> !text` for errors or destructive actions.
-
-The prefix character is stripped from the rendered output — only the callout style changes.
+The `[!TYPE]` line is stripped from the rendered output.
 
 ## Want more customization?
 
@@ -238,3 +245,7 @@ Contributions are welcome!
 
 - **Author:** [Santhosh Siva](https://www.santhoshsiva.dev)
 - **License:** [MIT](https://github.com/san-siva/blogkit-md/blob/main/LICENSE)
+
+> [!WARNING]
+>
+> This project is in early development.
