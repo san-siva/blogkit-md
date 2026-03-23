@@ -117,7 +117,12 @@ function renderNode({
 			if (firstChild?.type === 'paragraph') {
 				const firstInline = firstChild.children[0];
 				if (firstInline?.type === 'text') {
-					if (firstInline.value.startsWith('!')) {
+					const githubAlertMatch = /^\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]$/i.exec(firstInline.value);
+					if (githubAlertMatch) {
+						const alertType = githubAlertMatch[1].toUpperCase();
+						calloutType = alertType === 'WARNING' ? 'warning' : alertType === 'CAUTION' ? 'error' : 'info';
+						strippedChildren = children.slice(1);
+					} else if (firstInline.value.startsWith('!')) {
 						calloutType = 'error';
 						const trimmed = firstInline.value.slice(1).trimStart();
 						strippedChildren = [
