@@ -41,10 +41,12 @@ const BlogPost = async ({ filePath, jsonLd }: BlogPostProperties) => {
 	}
 
 	const { ast, frontmatter } = parseMarkdown(content);
-	const rendered = renderMarkdownAst(ast);
-
 	const title = frontmatter.title;
 	const desc = frontmatter.description;
+
+	const isTitleEmpty = !title || title.trim() === '';
+
+	const rendered = renderMarkdownAst(ast, isTitleEmpty);
 
 	return (
 		<Blog jsonLd={jsonLd}>

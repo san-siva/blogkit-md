@@ -36,7 +36,7 @@ export const readMarkdownFile = async (
 	}
 
 	const { ast, frontmatter } = parseMarkdown(content);
-	const rendered = renderMarkdownAst(ast);
+	const rendered = renderMarkdownAst(ast, !frontmatter.title);
 
 	return { success: true, rendered, ...frontmatter };
 };
