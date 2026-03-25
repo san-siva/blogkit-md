@@ -245,7 +245,3 @@ Contributions are welcome!
 
 - **Author:** [Santhosh Siva](https://www.santhoshsiva.dev)
 - **License:** [MIT](https://github.com/san-siva/blogkit-md/blob/main/LICENSE)
-
-> [!WARNING]
->
-> This project is in early development.

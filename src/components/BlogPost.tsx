@@ -23,8 +23,10 @@ const BlogPost = async ({ filePath, jsonLd }: BlogPostProperties) => {
 		return (
 			<Blog>
 				<Callout type="warning">
-					Could not read file: &quot;{filePath}&quot;. Make sure the path is
-					correct and the file exists.
+					<p>
+						Could not read file: &quot;{filePath}&quot;. Make sure the path is
+						correct and the file exists.
+					</p>
 				</Callout>
 			</Blog>
 		);
