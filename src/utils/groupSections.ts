@@ -1,9 +1,7 @@
-import type { RootContent } from 'mdast';
-
-import { extractText } from './extractText';
+import type { PhrasingContent, RootContent } from 'mdast';
 
 export type Section = {
-	title: string;
+	titleNodes: PhrasingContent[];
 	headingLevel: number;
 	nodes: RootContent[];
 	subsections: Section[];
@@ -37,7 +35,7 @@ const consumeNode = (
 		// instead of: Parent { nodes: [...], subsections: [Child] }
 		if (section.nodes.length > 0) {
 			const subSection: Section = {
-				title: '',
+				titleNodes: [],
 				headingLevel: section.headingLevel,
 				nodes: section.nodes,
 				subsections: [],
@@ -47,7 +45,7 @@ const consumeNode = (
 			section.nodes = [];
 		}
 		const subsection: Section = {
-			title: extractText(node.children),
+			titleNodes: node.children,
 			headingLevel,
 			nodes: [],
 			subsections: [],
@@ -59,7 +57,7 @@ const consumeNode = (
 
 	if (!section.previousSection) {
 		const subSection: Section = {
-			title: extractText(node.children),
+			titleNodes: node.children,
 			headingLevel,
 			nodes: [],
 			subsections: [],
@@ -74,7 +72,7 @@ const consumeNode = (
 
 export const groupSections = (nodes: RootContent[]): Section[] => {
 	const initialSection: Section = {
-		title: '',
+		titleNodes: [],
 		headingLevel: Infinity,
 		nodes: [],
 		subsections: [],
@@ -82,5 +80,5 @@ export const groupSections = (nodes: RootContent[]): Section[] => {
 	};
 	const sections: Section[] = [initialSection];
 	consumeNode(nodes, 0, sections, initialSection);
-	return sections.filter(s => s.title !== '' || s.nodes.length > 0);
+	return sections.filter(s => s.titleNodes.length > 0 || s.nodes.length > 0);
 };

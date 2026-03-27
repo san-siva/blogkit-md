@@ -155,18 +155,16 @@ function renderNode({
 				item => item.checked !== null && item.checked !== undefined
 			);
 			if (isTaskList) {
-				const items: CheckListItem[] = node.children.map((item, index) => ({
-					id: String(index),
-					isChecked: item.checked === true,
-					children: item.children.map((child, childIndex) =>
-						renderNode({
-							node: child as RootContent,
-							key: childIndex,
-							inList: true,
-							counters,
-						})
-					),
-				}));
+				const items: CheckListItem[] = node.children.map((item, index) => {
+					const para = item.children.find(c => c.type === 'paragraph');
+					const children =
+						para?.type === 'paragraph' ? (
+							<p>{renderPhrasingContent(para.children)}</p>
+						) : (
+							<p />
+						);
+					return { id: String(index), isChecked: item.checked === true, children };
+				});
 				return <CheckList key={key} items={items} hasMarginUp hasMarginDown />;
 			}
 			const Tag = node.ordered ? 'ol' : 'ul';
@@ -207,8 +205,11 @@ function renderSection(
 	counters: Counters,
 	key = -1
 ): React.ReactNode {
+	const title = section.titleNodes.length > 0
+		? <p>{renderPhrasingContent(section.titleNodes)}</p>
+		: '';
 	return (
-		<BlogSection key={key} title={section?.title ?? ''}>
+		<BlogSection key={key} title={title}>
 			{renderNodes(section.nodes, counters)}
 			{section.subsections.map((subsection, index) =>
 				renderSection(subsection, counters, index)
@@ -226,9 +227,9 @@ export function stripRedundantSectionTitle(
 	isTitleEmpty: boolean
 ): void {
 	if (!isTitleEmpty && grouped.length === 1) {
-		const [{ title, nodes, subsections }] = grouped;
-		if (title.length > 0 && (nodes.length > 0 || subsections.length > 0)) {
-			grouped[0].title = '';
+		const [{ titleNodes, nodes, subsections }] = grouped;
+		if (titleNodes.length > 0 && (nodes.length > 0 || subsections.length > 0)) {
+			grouped[0].titleNodes = [];
 		}
 	}
 }

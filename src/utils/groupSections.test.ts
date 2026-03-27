@@ -4,12 +4,16 @@ import remarkParse from 'remark-parse';
 import { unified } from 'unified';
 import type { Root } from 'mdast';
 
+import { extractText } from './extractText';
 import { groupSections } from './groupSections';
 
 const sections = (md: string) => {
 	const ast = unified().use(remarkParse).use(remarkGfm).parse(md) as Root;
 	return groupSections(ast.children);
 };
+
+const title = (s: ReturnType<typeof sections>[number]) =>
+	extractText(s.titleNodes);
 
 describe('groupSections', () => {
 	describe('empty input', () => {
@@ -22,7 +26,7 @@ describe('groupSections', () => {
 		it('returns a single untitled section containing all nodes', () => {
 			const result = sections('some text\n\nmore text');
 			expect(result).toHaveLength(1);
-			expect(result[0].title).toBe('');
+			expect(result[0].titleNodes).toHaveLength(0);
 			expect(result[0].nodes).toHaveLength(2);
 		});
 	});
@@ -31,21 +35,21 @@ describe('groupSections', () => {
 		it('creates a section for H1', () => {
 			const result = sections('# Title');
 			expect(result).toHaveLength(1);
-			expect(result[0].title).toBe('Title');
+			expect(title(result[0])).toBe('Title');
 			expect(result[0].headingLevel).toBe(1);
 		});
 
 		it('creates a section for H2', () => {
 			const result = sections('## Section');
 			expect(result).toHaveLength(1);
-			expect(result[0].title).toBe('Section');
+			expect(title(result[0])).toBe('Section');
 			expect(result[0].headingLevel).toBe(2);
 		});
 
 		it('creates multiple sections for sequential H2s', () => {
 			const result = sections('## One\n\n## Two\n\n## Three');
 			expect(result).toHaveLength(3);
-			expect(result.map(s => s.title)).toEqual(['One', 'Two', 'Three']);
+			expect(result.map(s => title(s))).toEqual(['One', 'Two', 'Three']);
 		});
 
 		it('groups content nodes under their section', () => {
@@ -59,9 +63,9 @@ describe('groupSections', () => {
 		it('returns an untitled intro section followed by headed sections', () => {
 			const result = sections('intro text\n\n## Section');
 			expect(result).toHaveLength(2);
-			expect(result[0].title).toBe('');
+			expect(result[0].titleNodes).toHaveLength(0);
 			expect(result[0].nodes).toHaveLength(1);
-			expect(result[1].title).toBe('Section');
+			expect(title(result[1])).toBe('Section');
 		});
 	});
 
@@ -69,20 +73,20 @@ describe('groupSections', () => {
 		it('moves content preceding a subsection into its own untitled subsection', () => {
 			const result = sections('## Parent\n\nsome text\n\n### Child');
 			expect(result).toHaveLength(1);
-			expect(result[0].title).toBe('Parent');
+			expect(title(result[0])).toBe('Parent');
 			expect(result[0].nodes).toHaveLength(0);
 			expect(result[0].subsections).toHaveLength(2);
-			expect(result[0].subsections[0].title).toBe('');
+			expect(result[0].subsections[0].titleNodes).toHaveLength(0);
 			expect(result[0].subsections[0].nodes).toHaveLength(1);
-			expect(result[0].subsections[1].title).toBe('Child');
+			expect(title(result[0].subsections[1])).toBe('Child');
 		});
 
 		it('skips the untitled subsection when no content precedes the deeper heading', () => {
 			const result = sections('## Parent\n\n### Child');
 			expect(result).toHaveLength(1);
-			expect(result[0].title).toBe('Parent');
+			expect(title(result[0])).toBe('Parent');
 			expect(result[0].subsections).toHaveLength(1);
-			expect(result[0].subsections[0].title).toBe('Child');
+			expect(title(result[0].subsections[0])).toBe('Child');
 		});
 	});
 
@@ -91,19 +95,19 @@ describe('groupSections', () => {
 			const result = sections('## Parent\n\n### Child');
 			expect(result).toHaveLength(1);
 			expect(result[0].subsections).toHaveLength(1);
-			expect(result[0].subsections[0].title).toBe('Child');
+			expect(title(result[0].subsections[0])).toBe('Child');
 		});
 
 		it('promotes H3 to top-level when no parent section exists', () => {
 			const result = sections('### Orphan');
 			expect(result).toHaveLength(1);
-			expect(result[0].title).toBe('Orphan');
+			expect(title(result[0])).toBe('Orphan');
 		});
 
 		it('creates multiple subsections under one parent', () => {
 			const result = sections('## Parent\n\n### A\n\n### B');
 			expect(result).toHaveLength(1);
-			expect(result[0].subsections.map(s => s.title)).toEqual(['A', 'B']);
+			expect(result[0].subsections.map(s => title(s))).toEqual(['A', 'B']);
 		});
 	});
 

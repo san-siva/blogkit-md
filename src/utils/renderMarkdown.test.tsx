@@ -17,13 +17,16 @@ vi.mock('@san-siva/blogkit', () => ({
 
 import { renderMarkdownAst, stripRedundantSectionTitle } from './renderMarkdown';
 import type { Section } from './groupSections';
+import type { PhrasingContent } from 'mdast';
+
+const textNode = (value: string): PhrasingContent => ({ type: 'text', value });
 
 const makeSection = (
-	title: string,
+	titleNodes: PhrasingContent[] = [],
 	nodes: Section['nodes'] = [],
 	subsections: Section[] = []
 ): Section => ({
-	title,
+	titleNodes,
 	headingLevel: 2,
 	nodes,
 	subsections,
@@ -33,45 +36,45 @@ const parse = (md: string): Root =>
 	unified().use(remarkParse).use(remarkGfm).parse(md) as Root;
 
 describe('stripRedundantSectionTitle', () => {
-	it('clears the section title when isTitleEmpty is false and the section has nodes', () => {
-		const grouped = [makeSection('My Title', [{ type: 'paragraph', children: [] }])];
+	it('clears titleNodes when isTitleEmpty is false and the section has nodes', () => {
+		const grouped = [makeSection([textNode('My Title')], [{ type: 'paragraph', children: [] }])];
 		stripRedundantSectionTitle(grouped, false);
-		expect(grouped[0].title).toBe('');
+		expect(grouped[0].titleNodes).toHaveLength(0);
 	});
 
-	it('clears the section title when isTitleEmpty is false and the section has subsections', () => {
-		const sub = makeSection('Sub', [{ type: 'paragraph', children: [] }]);
-		const grouped = [makeSection('My Title', [], [sub])];
+	it('clears titleNodes when isTitleEmpty is false and the section has subsections', () => {
+		const sub = makeSection([textNode('Sub')], [{ type: 'paragraph', children: [] }]);
+		const grouped = [makeSection([textNode('My Title')], [], [sub])];
 		stripRedundantSectionTitle(grouped, false);
-		expect(grouped[0].title).toBe('');
+		expect(grouped[0].titleNodes).toHaveLength(0);
 	});
 
-	it('does not clear the title when isTitleEmpty is true', () => {
-		const grouped = [makeSection('My Title', [{ type: 'paragraph', children: [] }])];
+	it('does not clear titleNodes when isTitleEmpty is true', () => {
+		const grouped = [makeSection([textNode('My Title')], [{ type: 'paragraph', children: [] }])];
 		stripRedundantSectionTitle(grouped, true);
-		expect(grouped[0].title).toBe('My Title');
+		expect(grouped[0].titleNodes).toEqual([textNode('My Title')]);
 	});
 
-	it('does not clear the title when there are multiple sections', () => {
+	it('does not clear titleNodes when there are multiple sections', () => {
 		const grouped = [
-			makeSection('Title A', [{ type: 'paragraph', children: [] }]),
-			makeSection('Title B', [{ type: 'paragraph', children: [] }]),
+			makeSection([textNode('Title A')], [{ type: 'paragraph', children: [] }]),
+			makeSection([textNode('Title B')], [{ type: 'paragraph', children: [] }]),
 		];
 		stripRedundantSectionTitle(grouped, false);
-		expect(grouped[0].title).toBe('Title A');
-		expect(grouped[1].title).toBe('Title B');
+		expect(grouped[0].titleNodes).toEqual([textNode('Title A')]);
+		expect(grouped[1].titleNodes).toEqual([textNode('Title B')]);
 	});
 
-	it('does not clear the title when the section has no nodes or subsections', () => {
-		const grouped = [makeSection('My Title')];
+	it('does not clear titleNodes when the section has no nodes or subsections', () => {
+		const grouped = [makeSection([textNode('My Title')])];
 		stripRedundantSectionTitle(grouped, false);
-		expect(grouped[0].title).toBe('My Title');
+		expect(grouped[0].titleNodes).toEqual([textNode('My Title')]);
 	});
 
-	it('does not clear the title when it is already empty', () => {
-		const grouped = [makeSection('', [{ type: 'paragraph', children: [] }])];
+	it('does not clear titleNodes when they are already empty', () => {
+		const grouped = [makeSection([], [{ type: 'paragraph', children: [] }])];
 		stripRedundantSectionTitle(grouped, false);
-		expect(grouped[0].title).toBe('');
+		expect(grouped[0].titleNodes).toHaveLength(0);
 	});
 });
 
@@ -100,12 +103,19 @@ describe('renderMarkdownAst', () => {
 	it('preserves the section title when isTitleEmpty is true', () => {
 		const result = renderMarkdownAst(parse('## Section\n\nSome content'), true);
 		const section = result.sections[0] as React.ReactElement;
-		expect(section.props.title).toBe('Section');
+		const titleEl = section.props.title as React.ReactElement;
+		expect(titleEl.type).toBe('p');
+		expect(titleEl.props.children).toEqual(['Section']);
 	});
 
 	it('preserves titles of all sections when there are multiple sections', () => {
 		const result = renderMarkdownAst(parse('## One\n\n## Two'), false);
-		const titles = (result.sections as React.ReactElement[]).map(s => s.props.title);
-		expect(titles).toEqual(['One', 'Two']);
+		const titleEls = (result.sections as React.ReactElement[]).map(
+			s => s.props.title as React.ReactElement
+		);
+		expect(titleEls[0].type).toBe('p');
+		expect(titleEls[0].props.children).toEqual(['One']);
+		expect(titleEls[1].type).toBe('p');
+		expect(titleEls[1].props.children).toEqual(['Two']);
 	});
 });
