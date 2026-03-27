@@ -1,6 +1,6 @@
 {
 	"name": "@san-siva/blogkit-md",
-	"version": "0.3.9",
+	"version": "0.3.10",
 	"description": "Converts markdown files into JSX blog posts for Blogkit",
 	"main": "./dist/index.js",
 	"exports": {
@@ -21,7 +21,7 @@
 		"fix": "eslint . --config eslint.config.ts --fix"
 	},
 	"dependencies": {
-		"@san-siva/blogkit": "^1.1.32",
+		"@san-siva/blogkit": "^1.1.33",
 		"@san-siva/stylekit": "^1.0.12",
 		"next": "^16.0.10",
 		"react": "^19.0.0",
