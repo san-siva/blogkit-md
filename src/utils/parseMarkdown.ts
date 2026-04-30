@@ -36,12 +36,16 @@ export const parseMarkdown = (content: string): ParseResult => {
 
 	if (ast.children[0]?.type === 'yaml') {
 		const raw = (ast.children[0] as Yaml).value;
-		const parsed = parseYaml(raw) as Record<string, unknown>;
-		const title = parsed.title ?? parsed.name;
-		frontmatter = {
-			title: typeof title === 'string' ? title : undefined,
-			description: typeof parsed.description === 'string' ? parsed.description : undefined,
-		};
+		try {
+			const parsed = parseYaml(raw) as Record<string, unknown>;
+			const title = parsed.title ?? parsed.name;
+			frontmatter = {
+				title: typeof title === 'string' ? title : undefined,
+				description: typeof parsed.description === 'string' ? parsed.description : undefined,
+			};
+		} catch {
+			// Invalid YAML frontmatter — ignore and fall through to H1 title extraction
+		}
 		ast.children.shift();
 	}
 
