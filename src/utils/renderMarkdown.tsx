@@ -163,7 +163,11 @@ function renderNode({
 						) : (
 							<p />
 						);
-					return { id: String(index), isChecked: item.checked === true, children };
+					return {
+						id: String(index),
+						isChecked: item.checked === true,
+						children,
+					};
 				});
 				return <CheckList key={key} items={items} hasMarginUp hasMarginDown />;
 			}
@@ -205,9 +209,12 @@ function renderSection(
 	counters: Counters,
 	key = -1
 ): React.ReactNode {
-	const title = section.titleNodes.length > 0
-		? <p>{renderPhrasingContent(section.titleNodes)}</p>
-		: '';
+	const title =
+		section.titleNodes.length > 0 ? (
+			<p>{renderPhrasingContent(section.titleNodes)}</p>
+		) : (
+			''
+		);
 	return (
 		<BlogSection key={key} title={title}>
 			{renderNodes(section.nodes, counters)}
