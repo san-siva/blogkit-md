@@ -1,13 +1,17 @@
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 
-import type { Frontmatter } from '../utils/parseMarkdown';
 import { parseMarkdown } from '../utils/parseMarkdown';
 import type { RenderedMarkdown } from '../utils/renderMarkdown';
 import { renderMarkdownAst } from '../utils/renderMarkdown';
 
 type MarkdownFileResult =
-	| ({ success: true; rendered: RenderedMarkdown } & Frontmatter)
+	| {
+			success: true;
+			rendered: RenderedMarkdown;
+			title: string;
+			description: string;
+	  }
 	| { success: false; error: string };
 
 export const readMarkdownFile = async (
@@ -35,8 +39,8 @@ export const readMarkdownFile = async (
 		return { success: false, error: `File "${filePath}" is empty.` };
 	}
 
-	const { ast, frontmatter } = parseMarkdown(content);
-	const rendered = renderMarkdownAst(ast, !frontmatter.title);
+	const { ast, title = '', description = '' } = parseMarkdown(content);
+	const rendered = renderMarkdownAst(ast);
 
-	return { success: true, rendered, ...frontmatter };
+	return { success: true, rendered, title, description };
 };

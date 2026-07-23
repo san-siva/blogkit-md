@@ -7,49 +7,58 @@ import { parse as parseYaml } from 'yaml';
 
 import { extractText } from './extractText';
 
-export type Frontmatter = {
-	title?: string;
-	description?: string;
-};
-
 export type ParseResult = {
 	ast: Root;
-	frontmatter: Frontmatter;
+	title: string | undefined;
+	description: string | undefined;
 };
 
-// When a document has no frontmatter title, treat a leading H1 as the page title
-// and remove it from the AST so it isn't also rendered as a section.
-const consumeH1Title = (ast: Root, frontmatter: Frontmatter): Frontmatter => {
-	if (!frontmatter.title && ast.children[0]?.type === 'heading' && (ast.children[0] as Heading).depth === 1) {
-		const title = extractText((ast.children[0] as Heading).children);
-		ast.children.shift();
-		return { ...frontmatter, title };
+const getPageInfoFromSections = (ast: Root) => {
+	const firstSection = ast?.children?.[0];
+	if (!firstSection) return;
+
+	const isFirstSectionHeading = firstSection.type === 'heading';
+	if (!isFirstSectionHeading) return;
+
+	const isFirstSectionAValidHeader = (firstSection as Heading).depth === 1;
+	if (!isFirstSectionAValidHeader) return;
+
+	const title = extractText((ast.children[0] as Heading).children);
+
+	// to avoid re-printing the same header twice;
+	ast.children.shift();
+
+	return { title };
+};
+
+const getPageInfoFromYaml = (ast: Root) => {
+	if (ast?.children?.[0]?.type !== 'yaml') return;
+	const raw = (ast.children[0] as Yaml).value;
+	ast.children.shift();
+	try {
+		const parsed = parseYaml(raw) as Record<string, unknown>;
+		const title = parsed.title ?? parsed.name;
+		return {
+			title: typeof title === 'string' ? title : undefined,
+			description:
+				typeof parsed.description === 'string' ? parsed.description : undefined,
+		};
+	} catch {
+		return;
 	}
-	return frontmatter;
 };
 
 export const parseMarkdown = (content: string): ParseResult => {
-	const processor = unified().use(remarkParse).use(remarkGfm).use(remarkFrontmatter, ['yaml']);
+	const processor = unified()
+		.use(remarkParse)
+		.use(remarkGfm)
+		.use(remarkFrontmatter, ['yaml']);
 	const ast = processor.parse(content) as Root;
-
-	let frontmatter: Frontmatter = {};
-
-	if (ast.children[0]?.type === 'yaml') {
-		const raw = (ast.children[0] as Yaml).value;
-		try {
-			const parsed = parseYaml(raw) as Record<string, unknown>;
-			const title = parsed.title ?? parsed.name;
-			frontmatter = {
-				title: typeof title === 'string' ? title : undefined,
-				description: typeof parsed.description === 'string' ? parsed.description : undefined,
-			};
-		} catch {
-			// Invalid YAML frontmatter — ignore and fall through to H1 title extraction
-		}
-		ast.children.shift();
-	}
-
-	frontmatter = consumeH1Title(ast, frontmatter);
-
-	return { ast, frontmatter };
+	const { title, description } =
+		getPageInfoFromYaml(ast) ?? getPageInfoFromSections(ast) ?? {};
+	return {
+		ast,
+		title,
+		description,
+	};
 };

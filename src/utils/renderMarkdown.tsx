@@ -229,26 +229,9 @@ export type RenderedMarkdown = {
 	sections: React.ReactNode[];
 };
 
-export function stripRedundantSectionTitle(
-	grouped: Section[],
-	isTitleEmpty: boolean
-): void {
-	if (!isTitleEmpty && grouped.length === 1) {
-		const [{ titleNodes, nodes, subsections }] = grouped;
-		if (titleNodes.length > 0 && (nodes.length > 0 || subsections.length > 0)) {
-			grouped[0].titleNodes = [];
-		}
-	}
-}
-
-export const renderMarkdownAst = (
-	ast: Root,
-	isTitleEmpty: boolean
-): RenderedMarkdown => {
+export const renderMarkdownAst = (ast: Root): RenderedMarkdown => {
 	const counters: Counters = { mermaid: 0 };
 	const grouped = groupSections(ast.children);
-
-	stripRedundantSectionTitle(grouped, isTitleEmpty);
 
 	return {
 		sections: grouped.map((section, index) =>

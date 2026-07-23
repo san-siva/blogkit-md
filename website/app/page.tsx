@@ -4,8 +4,7 @@ import { BlogPost, readMarkdownFile } from '@san-siva/blogkit-md';
 
 import { BLOGKIT_MD, SITE_URL, buildPageMetadata } from './data';
 
-const FILE_PATH =
-	'/Users/santhosh.siva/Work/personal.san-siva/notes/functional_errors/toggle.md';
+const FILE_PATH = '';
 
 export async function generateMetadata(): Promise<Metadata> {
 	const result = await readMarkdownFile(FILE_PATH);
