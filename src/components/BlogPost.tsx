@@ -9,9 +9,14 @@ import { MarkdownSections, renderMarkdownAst } from '../utils/renderMarkdown';
 type BlogPostProperties = {
 	filePath: string;
 	jsonLd?: WithContext<Thing>;
+	increasedWidthMode?: boolean;
 };
 
-const BlogPost = async ({ filePath, jsonLd }: BlogPostProperties) => {
+const BlogPost = async ({
+	filePath,
+	jsonLd,
+	increasedWidthMode,
+}: BlogPostProperties) => {
 	const absolutePath = path.isAbsolute(filePath)
 		? filePath
 		: path.join(process.cwd(), filePath);
@@ -21,7 +26,7 @@ const BlogPost = async ({ filePath, jsonLd }: BlogPostProperties) => {
 		content = await readFile(absolutePath, 'utf8');
 	} catch {
 		return (
-			<Blog>
+			<Blog increasedWidthMode={increasedWidthMode}>
 				<Callout type="warning">
 					<p>
 						Could not read file: &quot;{filePath}&quot;. Make sure the path is
@@ -34,7 +39,7 @@ const BlogPost = async ({ filePath, jsonLd }: BlogPostProperties) => {
 
 	if (!content.trim()) {
 		return (
-			<Blog>
+			<Blog increasedWidthMode={increasedWidthMode}>
 				<Callout type="warning">File &quot;{filePath}&quot; is empty.</Callout>
 			</Blog>
 		);
@@ -45,7 +50,7 @@ const BlogPost = async ({ filePath, jsonLd }: BlogPostProperties) => {
 	const rendered = renderMarkdownAst(ast);
 
 	return (
-		<Blog jsonLd={jsonLd}>
+		<Blog jsonLd={jsonLd} increasedWidthMode={increasedWidthMode}>
 			{title && <BlogHeader title={[title]} desc={desc ? [desc] : []} />}
 			<MarkdownSections rendered={rendered} />
 		</Blog>
