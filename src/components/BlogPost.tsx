@@ -10,12 +10,14 @@ type BlogPostProperties = {
 	filePath: string;
 	jsonLd?: WithContext<Thing>;
 	increasedWidthMode?: boolean;
+	isTocEnabled?: boolean;
 };
 
 const BlogPost = async ({
 	filePath,
 	jsonLd,
 	increasedWidthMode,
+	isTocEnabled,
 }: BlogPostProperties) => {
 	const absolutePath = path.isAbsolute(filePath)
 		? filePath
@@ -26,7 +28,7 @@ const BlogPost = async ({
 		content = await readFile(absolutePath, 'utf8');
 	} catch {
 		return (
-			<Blog increasedWidthMode={increasedWidthMode}>
+			<Blog increasedWidthMode={increasedWidthMode} isTocEnabled={isTocEnabled}>
 				<Callout type="warning">
 					<p>
 						Could not read file: &quot;{filePath}&quot;. Make sure the path is
@@ -39,7 +41,7 @@ const BlogPost = async ({
 
 	if (!content.trim()) {
 		return (
-			<Blog increasedWidthMode={increasedWidthMode}>
+			<Blog increasedWidthMode={increasedWidthMode} isTocEnabled={isTocEnabled}>
 				<Callout type="warning">File &quot;{filePath}&quot; is empty.</Callout>
 			</Blog>
 		);
@@ -50,7 +52,7 @@ const BlogPost = async ({
 	const rendered = renderMarkdownAst(ast);
 
 	return (
-		<Blog jsonLd={jsonLd} increasedWidthMode={increasedWidthMode}>
+		<Blog jsonLd={jsonLd} increasedWidthMode={increasedWidthMode} isTocEnabled={isTocEnabled}>
 			{title && <BlogHeader title={[title]} desc={desc ? [desc] : []} />}
 			<MarkdownSections rendered={rendered} />
 		</Blog>
