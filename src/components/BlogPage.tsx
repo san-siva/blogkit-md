@@ -35,16 +35,6 @@ const BlogPage = ({ children }: BlogPageProperties) => {
 
 	return (
 		<Blog increasedWidthMode={checked}>
-			<CheckList
-				items={[
-					{
-						id: 'increased-width-mode',
-						isChecked: checked,
-						onClick: () => setIncreasedWidthMode(!checked),
-						children: <p>Increased width mode</p>,
-					},
-				]}
-			/>
 			{children}
 		</Blog>
 	);
