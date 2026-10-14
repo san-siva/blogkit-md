@@ -11,6 +11,7 @@ import {
 } from '@san-siva/blogkit';
 import type { Root, RootContent } from 'mdast';
 
+import { extractText } from './extractText';
 import type { Section } from './groupSections';
 import { groupSections } from './groupSections';
 import { renderPhrasingContent } from './renderPhrasingContent';
@@ -91,7 +92,7 @@ function renderNode({
 		case 'table': {
 			const [headerRow, ...bodyRows] = node.children;
 			const headers = headerRow?.children.map(cell =>
-				renderPhrasingContent(cell.children)
+				extractText(cell.children)
 			);
 			const rows = bodyRows.map(row =>
 				row.children.map((cell, index) => (
