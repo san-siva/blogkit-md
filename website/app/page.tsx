@@ -24,6 +24,7 @@ const c = (text: string) => <code>{text}</code>;
 export default function Home() {
 	return (
 		<Blog
+			increasedWidthMode
 			jsonLd={{
 				'@context': 'https://schema.org',
 				'@type': 'SoftwareApplication',
